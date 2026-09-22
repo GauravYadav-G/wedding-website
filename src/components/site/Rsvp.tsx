@@ -2,20 +2,17 @@
 
 import { useState, type FormEvent } from "react";
 import {
-  BadgeCheck,
   CalendarCheck,
   Check,
   Clock,
   Heart,
   LoaderCircle,
   Send,
-  Users,
   X,
 } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { Mandala } from "./Ornaments";
-import type { RsvpStats } from "@/lib/wedding";
 
 type Attendance = "yes" | "no" | "maybe";
 
@@ -32,8 +29,7 @@ const ATTENDANCE_OPTIONS: Array<{
 const inputClass =
   "w-full rounded-xl border border-gold/40 bg-cream-2/60 px-4 py-3.5 font-body text-ink placeholder:text-ink/40 transition-all duration-300 outline-none focus:border-saffron focus:ring-2 focus:ring-saffron/25";
 
-export default function Rsvp({ initialStats }: { initialStats: RsvpStats }) {
-  const [stats, setStats] = useState<RsvpStats>(initialStats);
+export default function Rsvp() {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [attendance, setAttendance] = useState<Attendance>("yes");
@@ -60,11 +56,10 @@ export default function Rsvp({ initialStats }: { initialStats: RsvpStats }) {
           message,
         }),
       });
-      const data = (await res.json()) as { ok: boolean; stats?: RsvpStats; error?: string };
+      const data = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !data.ok) {
         throw new Error(data.error ?? "Could not save your RSVP");
       }
-      if (data.stats) setStats(data.stats);
       setDone(true);
     } catch (err) {
       setError(
@@ -87,6 +82,7 @@ export default function Rsvp({ initialStats }: { initialStats: RsvpStats }) {
   return (
     <section
       id="rsvp"
+      data-story=""
       className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-maroon-2 via-maroon to-maroon-2 py-24 text-cream md:py-32"
     >
       <div className="dot-grid-light absolute inset-0 opacity-40" aria-hidden />
@@ -100,33 +96,9 @@ export default function Rsvp({ initialStats }: { initialStats: RsvpStats }) {
           <SectionHeading
             hindi="आपकी उपस्थिति"
             title="Will You Join Us?"
-            index="05 — Kindly respond"
+
             tone="dark"
           />
-        </Reveal>
-
-        {/* live stats */}
-        <Reveal delay={80} className="mt-10">
-          <div className="mx-auto grid max-w-3xl grid-cols-3 gap-3 md:gap-5">
-            {[
-              { icon: Users, value: stats.guests, label: "Guests confirmed" },
-              { icon: BadgeCheck, value: stats.attending, label: "Families accepted" },
-              { icon: Clock, value: stats.maybe, label: "Awaiting replies" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex flex-col items-center gap-1.5 rounded-2xl border border-gold-2/25 bg-cream-2/50 px-3 py-5 backdrop-blur-sm"
-              >
-                <item.icon className="h-5 w-5 text-gold-2" aria-hidden />
-                <span className="font-display text-3xl font-semibold tabular-nums md:text-4xl">
-                  {item.value}
-                </span>
-                <span className="text-center font-body text-[10px] font-medium tracking-[0.22em] text-ink/65 uppercase md:text-[11px]">
-                  {item.label}
-                </span>
-              </div>
-            ))}
-          </div>
         </Reveal>
 
         <Reveal delay={140} className="mt-10">
@@ -137,7 +109,7 @@ export default function Rsvp({ initialStats }: { initialStats: RsvpStats }) {
                   <CalendarCheck className="h-8 w-8" />
                 </span>
                 <h3 className="mt-5 font-display text-3xl font-semibold text-maroon">
-                  Blessing received
+                  Thank you for your response
                 </h3>
                 <p className="mt-3 max-w-sm font-body text-ink/70">
                   Thank you, {name.split(" ")[0] || "friend"} — your response has

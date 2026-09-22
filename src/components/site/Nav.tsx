@@ -44,7 +44,7 @@ export default function Nav() {
           <a
             href="#home"
             className="group flex items-center gap-3"
-            aria-label="Ayusha weds Deepak — back to top"
+            aria-label="Deepak weds Ayusha — back to top"
           >
             <Mandala className="h-9 w-9 text-saffron transition-transform duration-700 group-hover:rotate-90" />
             <span className="flex flex-col leading-none">
@@ -98,7 +98,7 @@ export default function Nav() {
       >
         <div className="dot-grid-light pointer-events-none absolute inset-0 opacity-40" />
         <div className="flex h-16 items-center justify-between px-5">
-          <span className="font-display text-xl font-semibold">Ayusha &amp; Deepak</span>
+          <span className="font-display text-xl font-semibold">Deepak &amp; Ayusha</span>
           <button
             type="button"
             onClick={() => setOpen(false)}

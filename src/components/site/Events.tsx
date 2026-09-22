@@ -1,16 +1,25 @@
-/* eslint-disable @next/next/no-img-element */
+import { PeacockDance } from "./LivingDecor";
+import { ArrowUpRight, CalendarPlus, Flame, Flower2, Music2, Sun } from "lucide-react";
 import { getVenue, wedding } from "@/lib/wedding";
+const icons = [Sun, Flower2, Music2, Flame];
 export default function Events() {
-  return <section id="events" className="timeline" aria-labelledby="timeline-title">
-    <div className="timeline__scenery" aria-hidden="true">
-      <picture className="timeline__garden-underlay"><source media="(max-width:700px)" srcSet="/artwork/9833bdd6ffb94266.webp" /><img src="/artwork/8181dc1636014ee4.webp" alt="" /></picture>
-      <picture className="timeline__backdrop"><source media="(max-width:700px)" srcSet="/artwork/acf828b9baf56ad9.webp" /><img src="/artwork/6db71f5b0f5620aa.webp" alt="" /></picture>
+  return <section id="events" className="celebrations" aria-labelledby="celebrations-title">
+    <div className="peacock-gateway" aria-label="Two peacocks on a flower-filled palace terrace">
+      <picture><source media="(max-width:700px)" srcSet="/artwork/acf828b9baf56ad9.webp" /><img src="/artwork/6db71f5b0f5620aa.webp" alt="Two peacocks with their full heads and flowing tails on an ornate garden terrace" width="1515" height="3552" loading="eager" decoding="async" /></picture>
     </div>
-    <div className="timeline__heading"><h2 id="timeline-title">Wedding <span>Celebration </span>Timeline</h2><p>Mark your calendars, we can’t wait to celebrate</p></div>
-    <div className="timeline__cards">{wedding.events.map(event => <article className="timeline-card" key={event.id}>
-      <img src="/artwork/timeline-card-blank.png" alt="" loading="lazy" />
-      <div className="timeline-card__copy"><h3>{event.name.replace(" — The Wedding", "")}</h3><p>{event.day}<br />{event.dateLabel}<br />{wedding.city}<br />{event.timeLabel}</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(getVenue(event.venueId).mapQuery)}`} target="_blank" rel="noreferrer">See the route ↗</a><a href={`/api/calendar?event=${event.id}`}>Add to calendar</a></div>
-    </article>)}</div>
-    <div className="timeline__ornaments" aria-hidden="true">{[0,1,2,3].map(i => <img key={i} src="/artwork/9f8fb90f116e078e.webp" alt="" />)}</div>
+    <div className="celebrations-content">
+      <PeacockDance />
+      <header className="premium-heading" data-story=""><span className="eyebrow">08 — 09 December 2026 · Greater Noida West</span><p className="script-accent">Our home fills with joy</p><h2 id="celebrations-title">First, the celebrations.</h2><p>On 8 December, join Deepak’s family at home for haldi, mehndi and sangeet.<br />The next day, gather with us as Deepak and Ayusha begin their married life.</p></header>
+      <div className="celebration-grid">{wedding.events.map((event, index) => {
+        const Icon = icons[index]; const venue = getVenue(event.venueId);
+        return <article data-story="" className={`celebration-card ${index === 3 ? "celebration-card-wedding" : ""}`} key={event.id}>
+          <span className="ceremony-icon"><Icon size={27} strokeWidth={1.15} aria-hidden="true" /></span>
+          <span className="ceremony-hindi" lang="hi">{event.hindi}</span><h3>{event.name}</h3>
+          <div className="ceremony-date"><strong>{index === 3 ? "09" : "08"}</strong><span>DECEMBER<br />{event.day}</span></div>
+          <p className="ceremony-time">{event.timeLabel || "The wedding day"}</p><p className="ceremony-venue">{venue.name}</p>
+          <div className="ceremony-actions"><a href={venue.mapUrl} target="_blank" rel="noreferrer">Directions <ArrowUpRight size={13} /></a><a href={`/api/calendar?event=${event.id}`} aria-label={`Add ${event.name} to calendar`}><CalendarPlus size={16} /></a></div>
+        </article>;
+      })}</div><p className="celebration-footnote">Two families, a thousand blessings, a lifetime of love.</p>
+    </div>
   </section>;
 }

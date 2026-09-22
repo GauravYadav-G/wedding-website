@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const eventId = new URL(request.url).searchParams.get("event");
   const events = eventId ? wedding.events.filter(event => event.id === eventId) : wedding.events;
   if (!events.length) return new Response("Event not found", { status: 404 });
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Ayusha and Deepak//Wedding//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Deepak and Ayusha//Wedding//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
   for (const event of events) {
     const venue = getVenue(event.venueId);
     const start = new Date(`${event.dateIso}T${event.time || "00:00"}:00+05:30`);
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
       ? [`DTSTART:${stamp(start)}`, `DTEND:${stamp(new Date(start.getTime() + 3 * 3600000))}`]
       : [`DTSTART;VALUE=DATE:${event.dateIso.replace(/-/g, "")}`, `DTEND;VALUE=DATE:${new Date(new Date(event.dateIso).getTime() + 86400000).toISOString().slice(0,10).replace(/-/g, "")}`];
     lines.push("BEGIN:VEVENT", `UID:${event.id}@ayusha-deepak-wedding`, `DTSTAMP:${stamp(new Date())}`, ...dates,
-      `SUMMARY:${escapeIcs(`Ayusha & Deepak — ${event.name}`)}`,
+      `SUMMARY:${escapeIcs(`Deepak & Ayusha — ${event.name}`)}`,
       `DESCRIPTION:${escapeIcs(`${event.note} ${wedding.hashtag}`)}`,
       `LOCATION:${escapeIcs(`${venue.name}, ${venue.address}`)}`, "END:VEVENT");
   }

@@ -30,7 +30,7 @@ export const wedding = {
   dateIso: "2026-12-09",
   dateLabel: "Wednesday, 9th December 2026",
   countdownTarget: "2026-12-09T00:00:00+05:30",
-  hashtag: "#AyushaWedsDeepak",
+  hashtag: "#DeepakWedsAyusha",
   contacts: ["8585947016", "9871207859"],
   venues: [
     {
@@ -50,7 +50,7 @@ export const wedding = {
     { id: "haldi", name: "Haldi", hindi: "हल्दी", day: "Tuesday", dateIso: "2026-12-08", dateLabel: "8th December 2026", time: "10:00", timeLabel: "10:00 AM", venueId: "home", note: "A morning of turmeric, blessings and laughter with our families.", icon: "sun" },
     { id: "mehndi", name: "Mehndi", hindi: "मेहंदी", day: "Tuesday", dateIso: "2026-12-08", dateLabel: "8th December 2026", time: "17:00", timeLabel: "5:00 PM", venueId: "home", note: "An evening of henna, music and joyful togetherness.", icon: "palette" },
     { id: "sangeet", name: "Sangeet", hindi: "संगीत", day: "Tuesday", dateIso: "2026-12-08", dateLabel: "8th December 2026", time: "19:00", timeLabel: "7:00 PM", venueId: "home", note: "Join us for a night of music, dancing and celebration.", icon: "music" },
-    { id: "wedding", name: "Wedding", hindi: "शुभ विवाह", day: "Wednesday", dateIso: "2026-12-09", dateLabel: "9th December 2026", time: "", timeLabel: "", venueId: "amaatra", note: "Celebrate the wedding of Ayusha and Deepak. Ceremony time to be announced.", icon: "flame" },
+    { id: "wedding", name: "Wedding", hindi: "शुभ विवाह", day: "Wednesday", dateIso: "2026-12-09", dateLabel: "9th December 2026", time: "", timeLabel: "", venueId: "amaatra", note: "Celebrate the wedding of Deepak and Ayusha. Ceremony time to be announced.", icon: "flame" },
   ] as WeddingEvent[],
 };
 
