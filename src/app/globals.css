@@ -302,17 +302,7 @@ html, body { max-width:100%; overflow-x:clip; }
 @media(max-width:700px) { .opening-trigger { top:52%;width:92px; }.opening-trigger span { top:calc(100% + 13px); } }
 @media(prefers-reduced-motion:reduce) { .opening-flap,.opening-card,.opening-envelope { transition-duration:.01ms!important;transition-delay:0s!important; }.opening-trigger::before { animation:none; } }
 
-/* Generated eight-frame sacred fire, aligned inside the actual havan kund. */
-.family-havan { top:57.2%;width:82px;height:110px;translate:-50% -58%;background:url('/artwork/havan-fire-sprite-v2.webp') 0 0 / 400% 200% no-repeat;filter:drop-shadow(0 0 13px #ed9a3280);animation:havan-fire-frames .76s steps(1,end) infinite;mix-blend-mode:screen; }
-.family-havan i { display:none; }
-@keyframes havan-fire-frames {
-  0%,12.49% { background-position:0 0; } 12.5%,24.99% { background-position:33.333% 0; }
-  25%,37.49% { background-position:66.666% 0; } 37.5%,49.99% { background-position:100% 0; }
-  50%,62.49% { background-position:0 100%; } 62.5%,74.99% { background-position:33.333% 100%; }
-  75%,87.49% { background-position:66.666% 100%; } 87.5%,100% { background-position:100% 100%; }
-}
-@media(max-width:700px) { .family-havan { top:57.1%;width:62px;height:83px;translate:-50% -58%;transform:none; } }
-@media(prefers-reduced-motion:reduce) { .family-havan { animation:none!important;background-position:33.333% 0; } }
+
 @media(prefers-reduced-motion:reduce) { .bells img,.hero__flag-banner { animation:none; } .hero__names { transform:none;opacity:1; } }
 .hero__flag-group img { max-width:none; }
 /* Four celebrations supplied by the families. */
@@ -830,10 +820,7 @@ html[data-ceremony-active="true"] .flower-shower * { animation-play-state:paused
 .family-blessing-copy h2 { font:400 clamp(40px,4.6vw,70px)/1.05 IvyOra,serif;color:#75462f; }
 .family-blessing .living-lamps { z-index:4; }
 .family-blessing .brass-lamp { left:8%;bottom:5%;transform:scale(.85); }.family-blessing .brass-lamp:nth-child(2) { left:auto;right:8%; }
-.family-havan { position:absolute;z-index:4;left:50%;top:69%;width:75px;height:80px;translate:-50% -50%;filter:drop-shadow(0 0 16px #e79c3a);pointer-events:none; }
-.family-havan i { position:absolute;left:22px;bottom:5px;width:29px;height:65px;border-radius:80% 20% 60% 40%;background:linear-gradient(0deg,#bd4d1e,#f8a92c 55%,#fff2ad);transform-origin:50% 100%;animation:family-fire 1.35s ease-in-out infinite alternate;opacity:.92; }
-.family-havan i:nth-child(2) { left:10px;width:24px;height:48px;animation-delay:-.6s;transform:rotate(-18deg); }.family-havan i:nth-child(3) { left:42px;width:22px;height:43px;animation-delay:-.95s;transform:rotate(16deg); }
-@keyframes family-fire { from { transform:scale(.86,1) rotate(-5deg); } to { transform:scale(1.08,.9) rotate(5deg); } }
+
 
 /* ---------- continuous full-bleed story polish ---------- */
 main > section { width:100%;max-width:none; }
@@ -867,16 +854,12 @@ main > section { width:100%;max-width:none; }
  .family-blessing-copy { top:5.5%;width:88%; }
  .family-blessing-copy .script-accent { margin-top:10px;font-size:35px; }
  .family-blessing-copy h2 { font-size:38px; }
- .family-havan { top:63%;transform:scale(.72);transform-origin:center; }
  .family-blessing .brass-lamp { left:-1%;bottom:2%;transform:scale(.58); }.family-blessing .brass-lamp:nth-child(2) { right:-1%; }
  .celebration-grid { grid-template-columns:1fr;gap:18px;width:min(100%,430px);margin-inline:auto; }
  .celebration-card { min-height:390px;padding-inline:clamp(30px,10vw,48px); }
  .story-venue-grid,.venue-help { width:100%; }
 }
 
-@media(prefers-reduced-motion:reduce) {
- .family-havan i { animation:none!important; }
-}
 
 /* ---------- scroll-open heirloom invitation v3 ---------- */
 html { scrollbar-width:none; }
@@ -1142,30 +1125,49 @@ html[data-invitation-hold="true"] .opening-card::after { content:"A moment to ta
  transform:scale(1.035)!important;
 }
 
-/* Keep the generated havan flame centred inside the kund. */
+/* Sacred havan fire, perfectly aligned inside the brass havan kund */
 .family-havan {
  position:absolute!important;
  z-index:8!important;
- top:57.2%!important;
- bottom:auto!important;
  left:50%!important;
- width:clamp(66px,7vw,126px)!important;
- aspect-ratio:1!important;
- transform:translate(-50%,-50%)!important;
+ top:48.2%!important;
+ bottom:auto!important;
+ width:clamp(58px,6vw,88px)!important;
+ aspect-ratio:3/4!important;
+ transform:translate(-50%,-88%)!important;
+ translate:none!important;
  background-image:url('/artwork/havan-fire-sprite-v2.webp')!important;
+ background-size:400% 200%!important;
  background-repeat:no-repeat!important;
- background-size:800% 100%!important;
- filter:drop-shadow(0 0 20px #ff991d77)!important;
- animation:havan-fire-frames .64s steps(8) infinite!important;
+ filter:drop-shadow(0 0 16px rgba(255,140,29,0.75)) drop-shadow(0 -4px 10px rgba(255,200,60,0.5))!important;
+ animation:havan-fire-frames .75s steps(1) infinite!important;
  pointer-events:none!important;
+ mix-blend-mode:screen!important;
+}
+.family-havan i { display:none!important; }
+
+@keyframes havan-fire-frames {
+  0%,12.49% { background-position:0% 0%; }
+  12.5%,24.99% { background-position:33.333% 0%; }
+  25%,37.49% { background-position:66.666% 0%; }
+  37.5%,49.99% { background-position:100% 0%; }
+  50%,62.49% { background-position:0% 100%; }
+  62.5%,74.99% { background-position:33.333% 100%; }
+  75%,87.49% { background-position:66.666% 100%; }
+  87.5%,100% { background-position:100% 100%; }
 }
 
 @media(max-width:700px) {
  .opening-trigger { top:52%!important;width:clamp(98px,28vw,124px)!important; }
- .family-havan { top:59%!important;width:clamp(55px,17vw,82px)!important; }
+ .family-havan {
+  top:55.2%!important;
+  width:clamp(48px,13vw,68px)!important;
+  transform:translate(-50%,-88%)!important;
+ }
 }
 
 @media(prefers-reduced-motion:reduce) {
  .opening-flap,.opening-card,.opening-envelope { transition-duration:.01ms!important; }
- .family-havan { animation:none!important;background-position:57.1429% 0!important; }
+ .family-havan { animation:none!important;background-position:0% 0%!important; }
 }
+

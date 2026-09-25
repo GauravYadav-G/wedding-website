@@ -70,6 +70,53 @@ export async function POST(request: Request) {
       guests,
       message: message ? message : null,
     });
+
+    // Send notification to FormSubmit API
+    const recipient =
+      process.env.RSVP_EMAIL ||
+      process.env.BLESSINGS_EMAIL ||
+      process.env.WEDDING_EMAIL ||
+      "deepuku.0212@gmail.com";
+
+    const attendanceLabel =
+      attendance === "yes"
+        ? "Joyfully Attending ✅"
+        : attendance === "no"
+        ? "Regretfully Declining ❌"
+        : "Will Confirm Later ⏳";
+
+    try {
+      const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          Guest_Name: name,
+          Phone_Number: mobile,
+          Attendance_Status: attendanceLabel,
+          Total_Guests: guests,
+          Note_From_Guest: message || "No message provided",
+          Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
+          _subject: `💌 New RSVP from ${name} (${attendance.toUpperCase()}) — Deepak & Ayusha Wedding`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+
+      if (!formSubmitRes.ok) {
+        const errorText = await formSubmitRes.text();
+        console.warn(
+          "[FormSubmit RSVP] API responded with:",
+          formSubmitRes.status,
+          errorText
+        );
+      }
+    } catch (apiErr) {
+      console.error("[FormSubmit RSVP] Error calling FormSubmit API:", apiErr);
+    }
+
     return NextResponse.json(
       { ok: true, stats: await getStats() },
       { status: 201 }

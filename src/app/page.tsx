@@ -14,6 +14,7 @@ import StoryMotion from "@/components/site/StoryMotion";
 import OpeningEnvelope from "@/components/site/OpeningEnvelope";
 import FamilyBlessing from "@/components/site/FamilyBlessing";
 import ChapterBlend from "@/components/site/ChapterBlend";
+import Wishes from "@/components/site/Wishes";
 
 export default function HomePage() {
   const jsonLd = {
@@ -71,6 +72,8 @@ export default function HomePage() {
         <Venue />
         <ChapterBlend tone="warm" />
         <Rsvp />
+        <ChapterBlend tone="warm" />
+        <Wishes />
         <ChapterBlend tone="dark" />
         <CountdownScene />
       </main>

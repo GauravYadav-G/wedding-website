@@ -32,7 +32,11 @@ export default function Hero() {
       if (Math.abs(video.currentTime - desired) < 1 / 48) return;
       if (video.seeking) { seekQueued = true; return; }
       seekQueued = false;
-      video.currentTime = desired;
+      if ("fastSeek" in video && typeof (video as unknown as { fastSeek?: (t: number) => void }).fastSeek === "function") {
+        (video as unknown as { fastSeek: (t: number) => void }).fastSeek(desired);
+      } else {
+        video.currentTime = desired;
+      }
     };
     const update = () => {
       frame = 0;

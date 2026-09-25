@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { wishes } from "@/db/schema";
 
@@ -11,34 +10,9 @@ const wishSchema = z.object({
   message: z
     .string()
     .trim()
-    .min(2, "Please write a small wish")
-    .max(280, "Wishes are limited to 280 characters"),
+    .min(2, "Please write a small blessing")
+    .max(500, "Blessings are limited to 500 characters"),
 });
-
-export async function GET() {
-  try {
-    const rows = await db
-      .select()
-      .from(wishes)
-      .orderBy(desc(wishes.createdAt))
-      .limit(30);
-    return NextResponse.json({
-      ok: true,
-      wishes: rows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        message: row.message,
-        createdAt: row.createdAt.toISOString(),
-      })),
-    });
-  } catch (error) {
-    console.error("GET /api/wishes failed", error);
-    return NextResponse.json(
-      { ok: false, error: "Could not load wishes" },
-      { status: 500 }
-    );
-  }
-}
 
 export async function POST(request: Request) {
   try {
@@ -48,31 +22,66 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           ok: false,
-          error: parsed.error.issues[0]?.message ?? "Invalid wish",
+          error: parsed.error.issues[0]?.message ?? "Invalid blessing",
         },
         { status: 400 }
       );
     }
+
+    const { name, message } = parsed.data;
+
+    // 1. Save blessing to database so it is never lost
     const [row] = await db
       .insert(wishes)
-      .values({ name: parsed.data.name, message: parsed.data.message })
+      .values({ name, message })
       .returning();
+
+    // 2. Send email using FormSubmit API (https://formsubmit.co)
+    const recipient =
+      process.env.BLESSINGS_EMAIL ||
+      process.env.WEDDING_EMAIL ||
+      "deepuku.0212@gmail.com";
+
+    try {
+      const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          Name: name,
+          Blessing: message,
+          Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
+          _subject: `🌸 New Wedding Blessing from ${name} for Deepak & Ayusha`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+
+      if (!formSubmitRes.ok) {
+        const errorText = await formSubmitRes.text();
+        console.warn(
+          "[FormSubmit] API responded with:",
+          formSubmitRes.status,
+          errorText
+        );
+      }
+    } catch (apiErr) {
+      console.error("[FormSubmit] Error calling FormSubmit API:", apiErr);
+    }
+
     return NextResponse.json(
       {
         ok: true,
-        wish: {
-          id: row.id,
-          name: row.name,
-          message: row.message,
-          createdAt: row.createdAt.toISOString(),
-        },
+        id: row.id,
       },
       { status: 201 }
     );
   } catch (error) {
     console.error("POST /api/wishes failed", error);
     return NextResponse.json(
-      { ok: false, error: "Could not post your wish right now" },
+      { ok: false, error: "Could not send your blessing right now" },
       { status: 500 }
     );
   }
