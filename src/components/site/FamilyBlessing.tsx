@@ -18,7 +18,7 @@ export default function FamilyBlessing() {
         <p className="script-accent">With every blessing</p>
         <h2 id="family-blessing-title">Two families become one.</h2>
       </header>
-      <div className="family-havan" aria-hidden="true"><i /><i /><i /></div>
+      <div className="family-havan" aria-hidden="true" />
       <LivingLamps />
     </section>
   );

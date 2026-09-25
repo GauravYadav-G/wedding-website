@@ -1,72 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ArrowDown } from "lucide-react";
-
-const clamp = (value: number) => Math.max(0, Math.min(1, value));
-const range = (value: number, start: number, end: number) => clamp((value - start) / (end - start));
+import { useEffect, useRef, useState } from "react";
+import { Sparkles } from "lucide-react";
 
 export default function OpeningEnvelope() {
   const root = useRef<HTMLElement>(null);
+  const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);
+  const [phase, setPhase] = useState<"sealed" | "opening" | "revealed" | "exiting">("sealed");
 
   useEffect(() => {
     const section = root.current;
     if (!section) return;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0;
-    let holdTimer: ReturnType<typeof setTimeout> | undefined;
-    let holding = false;
-    let heldOnce = false;
-    const previousOverflow = document.body.style.overflow;
+    const activeTimers = timers.current;
     const observer = new IntersectionObserver(([entry]) => {
       document.documentElement.dataset.envelopeActive = String(entry.isIntersecting);
     });
     observer.observe(section);
-    const paint = () => {
-      frame = 0;
-      const bounds = section.getBoundingClientRect();
-      const distance = Math.max(1, section.offsetHeight - innerHeight);
-      let progress = reduced.matches ? 0.68 : clamp(-bounds.top / distance);
-      if (!reduced.matches && !heldOnce && !holding && progress >= .64 && progress < .84) {
-        holding = true;
-        progress = .64;
-        document.documentElement.dataset.invitationHold = "true";
-        document.body.style.overflow = "hidden";
-        window.scrollTo(0, section.offsetTop + distance * .64);
-        holdTimer = setTimeout(() => {
-          holding = false;
-          heldOnce = true;
-          delete document.documentElement.dataset.invitationHold;
-          document.body.style.overflow = previousOverflow;
-          schedule();
-        }, 2000);
-      } else if (holding) progress = .64;
-      section.style.setProperty("--envelope-progress", progress.toFixed(4));
-      section.style.setProperty("--envelope-open", range(progress, 0.06, 0.4).toFixed(4));
-      section.style.setProperty("--invitation-rise", range(progress, 0.3, 0.62).toFixed(4));
-      section.style.setProperty("--envelope-exit", range(progress, 0.84, 0.99).toFixed(4));
-      section.dataset.phase = progress < 0.22 ? "sealed" : progress < 0.62 ? "opening" : "revealed";
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(paint); };
-    paint();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    reduced.addEventListener("change", schedule);
     return () => {
-      cancelAnimationFrame(frame);
-      clearTimeout(holdTimer);
-      if (holding) document.body.style.overflow = previousOverflow;
-      delete document.documentElement.dataset.invitationHold;
       observer.disconnect();
       delete document.documentElement.dataset.envelopeActive;
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      reduced.removeEventListener("change", schedule);
+      activeTimers.forEach(clearTimeout);
+      document.body.style.overflow = "";
     };
   }, []);
 
+  const openInvitation = () => {
+    if (phase !== "sealed") return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.body.style.overflow = "hidden";
+    setPhase(reduced ? "revealed" : "opening");
+    timers.current.push(setTimeout(() => setPhase("revealed"), reduced ? 80 : 1350));
+    timers.current.push(setTimeout(() => setPhase("exiting"), reduced ? 1900 : 3150));
+    timers.current.push(setTimeout(() => {
+      document.body.style.overflow = "";
+      document.getElementById("home")?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    }, reduced ? 2250 : 3900));
+  };
+
   return (
-    <section ref={root} className="invitation-opening" aria-label="Scroll to open Deepak and Ayusha's wedding invitation">
+    <section ref={root} className="invitation-opening" data-phase={phase} aria-label="Open Deepak and Ayusha's wedding invitation">
       <div className="opening-stage">
         <div className="opening-ambient" aria-hidden="true"><i /><i /><i /></div>
         <div className="opening-kicker"><span lang="hi">॥ शुभ विवाह ॥</span><p>An invitation, made with love</p></div>
@@ -87,9 +59,11 @@ export default function OpeningEnvelope() {
           </div>
           <div className="opening-pocket" aria-hidden="true" />
           <div className="opening-flap" aria-hidden="true" />
-          <div className="opening-seal" aria-hidden="true"><b>द</b><span>&amp;</span><b>आ</b></div>
+          <button className="opening-trigger" type="button" onClick={openInvitation} aria-label="Open Deepak and Ayusha's invitation">
+            <span>Open invitation</span>
+          </button>
         </div>
-        <div className="opening-scroll" aria-hidden="true"><span>Scroll to open</span><ArrowDown size={16} /><i><b /></i></div>
+        <div className="opening-scroll" aria-hidden="true"><span>Tap the AA seal to open</span><Sparkles size={14} /></div>
         <p className="opening-next">Our story begins here</p>
       </div>
     </section>
