@@ -1,8 +1,20 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { Mandala } from "./Ornaments";
 
 export function FlowerShower() {
-  return <div className="flower-shower" aria-hidden="true">{Array.from({length:16},(_,i)=><span key={i} className="drifting-blossom" style={{"--x":`${(i*31.7)%100}%`,"--delay":`${-i*2.3}s`,"--duration":`${17+i%5*3}s`,"--size":`${12+i%4*5}px`} as CSSProperties}><i>{Array.from({length:5},(_,j)=><b key={j} style={{rotate:`${j*72}deg`}}/>)}</i></span>)}</div>;
+  const motifs = ["mogra", "marigold", "rose-petals", "gota-leaf", "peacock-feather", "kalire"];
+  return <div className="flower-shower" aria-hidden="true">{Array.from({length:26},(_,i)=>{
+    const motif = motifs[i % motifs.length];
+    return <span key={i} className={`drifting-blossom flying-${motif}`} style={{
+      "--x":`${((i * 37.7 + 7) % 106) - 3}%`,
+      "--delay":`${-i * 2.7}s`,
+      "--duration":`${19 + (i % 7) * 2.4}s`,
+      "--size":`${20 + (i % 6) * 5}px`,
+      "--drift":`${-45 + (i % 5) * 23}px`,
+      "--depth":`${.55 + (i % 4) * .15}`,
+    } as CSSProperties}><Image src={`/artwork/flying-${motif}.webp`} alt="" width={320} height={320} /></span>;
+  })}</div>;
 }
 export function LivingChakra() {
   return <div className="living-chakra" aria-hidden="true"><Mandala/><Mandala/></div>;

@@ -1,0 +1,33 @@
+{
+  "name": "web-fsr",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hajime-san/web-fsr.git"
+  },
+  "author": "Hajime-san <utd.c.r.d.s.a@gmail.com>",
+  "devDependencies": {
+    "@types/node": "^18.15.1",
+    "@types/three": "^0.149.0",
+    "typescript": "5.0.2",
+    "vite": "4.1.4"
+  },
+  "dependencies": {
+    "comparison-slider": "1.2.0",
+    "lil-gui": "0.18.0",
+    "three": "0.150.1"
+  },
+  "engines": {
+    "node": ">=18.15.0"
+  },
+  "volta": {
+    "node": "18.15.0"
+  },
+  "packageManager": "pnpm@7.29.1",
+  "pnpm": {
+    "patchedDependencies": {
+      "comparison-slider@1.2.0": "patches/comparison-slider@1.2.0.patch"
+    }
+  }
+}

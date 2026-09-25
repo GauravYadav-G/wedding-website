@@ -10,8 +10,11 @@ export default function Venue() {
     try { await navigator.clipboard.writeText(address); setCopied(id); setTimeout(() => setCopied(null), 1800); } catch { setCopied(null); }
   };
   return <section id="venue" className="story-venues" aria-labelledby="venue-title">
-    <div className="venue-palace" aria-hidden="true"><span className="palace-glow" /><LivingLamps /></div>
-    <header className="premium-heading" data-story=""><span className="eyebrow">The next chapter · 9 December 2026</span><p className="script-accent">A setting for our forever</p><h2 id="venue-title">A place for every memory.</h2></header>
+    <div className="venue-intro">
+      <div className="venue-palace" aria-hidden="true"><picture><source media="(max-width:700px)" srcSet="/artwork/mandap-immersive-mobile.webp" /><img src="/artwork/mandap-immersive-desktop.webp" alt="" loading="lazy" decoding="async" /></picture><span className="palace-glow" /><LivingLamps /></div>
+      <header className="premium-heading venue-heading" data-story=""><span className="eyebrow">The next chapter · 9 December 2026</span><p className="script-accent">A setting for our forever</p><h2 id="venue-title">A place for every memory.</h2></header>
+      <span className="venue-discover" aria-hidden="true">Explore the venues ↓</span>
+    </div>
     <div className="story-venue-grid">{[...wedding.venues].reverse().map(venue => <article className="story-venue-card" key={venue.id} data-story="">
       <span className="eyebrow">{venue.id === "amaatra" ? "09 December · The wedding" : "08 December · Haldi, Mehndi & Sangeet"}</span><MapPin size={25} strokeWidth={1.2} className="venue-pin" aria-hidden="true" /><h3>{venue.name}</h3><p>{venue.address}</p>
       <div className="venue-actions"><a className="premium-button" href={venue.mapUrl} target="_blank" rel="noreferrer">Get directions <ArrowUpRight size={15} /></a><button type="button" onClick={() => copy(venue.id,venue.address)} aria-label={`Copy address for ${venue.name}`}>{copied === venue.id ? <Check size={17} /> : <Copy size={17} />}</button></div>

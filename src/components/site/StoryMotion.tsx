@@ -18,16 +18,25 @@ export default function StoryMotion() {
         if (!entry.isIntersecting) return;
         // Content stays visible before enhancement, even during a fast scroll.
         animations.push(entry.target.animate([
-          { opacity: .7, transform: "translateY(16px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ], { duration: 650, easing: "cubic-bezier(.2,.7,.2,1)" }));
+          { opacity: .35, transform: "translateY(28px) scale(.985)", filter: "blur(10px)" },
+          { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0px)" },
+        ], { duration: 1050, easing: "cubic-bezier(.16,1,.3,1)", fill: "both" }));
         observer.unobserve(entry.target);
       });
     }, { rootMargin: "80px 0px", threshold: 0 });
     document.querySelectorAll("[data-story]").forEach(el => observer.observe(el));
+    const artwork = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      animations.push(entry.target.animate([
+        { transform: "scale(1.045)", filter: "saturate(.88) blur(3px)" },
+        { transform: "scale(1)", filter: "saturate(1) blur(0px)" },
+      ], { duration: 1800, easing: "cubic-bezier(.16,1,.3,1)", fill: "both" }));
+      artwork.unobserve(entry.target);
+    }), { rootMargin: "100px 0px", threshold: .08 });
+    document.querySelectorAll(".family-blessing-art img,.venue-palace img,.forever-art img").forEach(el => artwork.observe(el));
     const stop = () => { if(reduced.matches) { observer.disconnect(); animations.forEach(animation => animation.cancel()); } };
     reduced.addEventListener("change", stop);
-    return () => { living.disconnect(); document.removeEventListener("visibilitychange", visibility); delete document.body.dataset.motionHidden; observer.disconnect(); animations.forEach(animation => animation.cancel()); reduced.removeEventListener("change", stop); };
+    return () => { living.disconnect(); artwork.disconnect(); document.removeEventListener("visibilitychange", visibility); delete document.body.dataset.motionHidden; observer.disconnect(); animations.forEach(animation => animation.cancel()); reduced.removeEventListener("change", stop); };
   }, []);
   return null;
 }

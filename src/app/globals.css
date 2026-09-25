@@ -551,6 +551,15 @@ a:focus-visible,button:focus-visible { outline:2px solid #a07d46;outline-offset:
 .drifting-blossom:nth-child(3n) b { background:radial-gradient(at 25% 25%,#ffe6aa,#d5a450 75%,#bc873a); }
 @keyframes blossom-descent { 0% { transform:translate3d(-20px,-5vh,0);opacity:0; } 10% { opacity:.65; } 55% { transform:translate3d(35px,55vh,35px); } 90% { opacity:.55; } 100% { transform:translate3d(-30px,110vh,-30px);opacity:0; } }
 @keyframes blossom-tumble { from { transform:rotateX(15deg) rotateY(-25deg) rotateZ(0); } to { transform:rotateX(150deg) rotateY(170deg) rotateZ(210deg); } }
+.drifting-blossom { animation-name:couture-descent; }
+.drifting-blossom img { display:block;width:100%;height:100%;object-fit:contain;opacity:var(--depth);filter:drop-shadow(0 5px 5px #4b26152b);transform-style:preserve-3d;animation:couture-tumble 9s ease-in-out var(--delay) infinite alternate; }
+.drifting-blossom:nth-child(2n) { animation-name:couture-descent-alt; }
+.flying-gota-leaf,.flying-peacock-feather { --size-mult:1.35; }
+.flying-kalire { --size-mult:1.55; }
+.flying-gota-leaf img,.flying-peacock-feather img,.flying-kalire img { scale:var(--size-mult); }
+@keyframes couture-descent { 0% { transform:translate3d(-20px,-7vh,0);opacity:0; } 11% { opacity:.72; } 52% { transform:translate3d(var(--drift),52vh,45px); } 88% { opacity:.58; } 100% { transform:translate3d(22px,110vh,-20px);opacity:0; } }
+@keyframes couture-descent-alt { 0% { transform:translate3d(25px,-7vh,-20px);opacity:0; } 11% { opacity:.72; } 48% { transform:translate3d(var(--drift),48vh,45px); } 88% { opacity:.58; } 100% { transform:translate3d(-25px,110vh,-15px);opacity:0; } }
+@keyframes couture-tumble { from { transform:rotateX(-18deg) rotateY(-28deg) rotateZ(-12deg); } to { transform:rotateX(135deg) rotateY(110deg) rotateZ(190deg); } }
 .living-chakra { position:relative;height:0;margin:0 auto;width:180px;pointer-events:none;color:#bd9650; }
 .living-chakra svg { position:absolute;width:180px;height:180px;top:-22px;left:0;opacity:.22;animation:chakra-orbit 50s linear infinite; }
 .living-chakra svg:nth-child(2) { inset:-6px auto auto 16px;width:148px;height:148px;animation-direction:reverse;animation-duration:35s;opacity:.17; }
@@ -590,3 +599,453 @@ a:focus-visible,button:focus-visible { outline:2px solid #a07d46;outline-offset:
  .drifting-blossom:nth-child(n+11) { display:none; }
 }
 @media(prefers-reduced-motion:reduce) { .flower-shower { display:none; }.living-chakra *, .hero__corners,.memory-canopy,.peacock-gateway img,.peacock-dance *,.living-lamps * { animation:none!important; }.celebration-card { transition:none; } }
+
+/* Art-directed sources: wide palace on desktop, close floral arch on phones. */
+.venue-palace { width:min(100%,1050px);aspect-ratio:1515 / 1120;background:none;overflow:hidden; }
+.venue-palace picture { display:block; }
+.venue-palace picture img { position:absolute;inset:0 auto auto 0;width:100%;height:auto;max-width:none; }
+.venue-palace .brass-lamp { left:23%;bottom:13%; }
+.venue-palace .brass-lamp:nth-child(2) { left:auto;right:23%; }
+@media(max-width:700px) {
+ .venue-palace { width:calc(100% + 36px);aspect-ratio:547 / 610;margin-inline:-18px; }
+ .venue-palace .brass-lamp { left:7%;bottom:10%; }.venue-palace .brass-lamp:nth-child(2) { right:7%; }
+}
+
+/* Only the birds deform; the original palace and garden remain stationary. */
+.peacock-gateway img { animation:none;transform:none; }
+.peacock-gateway canvas { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0; }
+.peacock-gateway[data-ready="true"] canvas { opacity:1;background:#fbefe3; }
+
+
+@media(prefers-reduced-motion:reduce) {
+ .peacock-gateway canvas { display:none!important; }
+
+}
+
+/* A continuous scroll-controlled varmala ceremony, not a video player. */
+.varmala-story { position:relative;height:300svh;background:#fff0e2;--approach:0;--exchange:0;--finish:0;--progress:0; }
+.varmala-stage { position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 45%,#fff9ed 0%,#f6e4cf 75%,#e8ceb0); }
+.ceremony-light { position:absolute;inset:0;background:conic-gradient(from -35deg at 50% 0%,transparent,#fff8d980 25deg,transparent 50deg);opacity:.6;pointer-events:none; }
+.ceremony-florals { position:absolute;top:-3%;left:-2%;width:104%;max-width:none;height:auto;opacity:.75;z-index:5;pointer-events:none;transform-origin:50% 0;animation:floral-canopy-sway 12s ease-in-out infinite alternate; }
+.ceremony-title { position:absolute;top:5svh;left:0;width:100%;text-align:center;z-index:7;color:#794328; }
+.ceremony-title > p:first-child { font:16px/1.4 serif;color:#a36c40;margin-bottom:14px; }
+.ceremony-title .eyebrow { font-size:9px;letter-spacing:.3em; }
+.ceremony-title h1 { font:400 clamp(45px,6vw,82px)/1.15 IvyOra,serif;margin:12px 0; }
+.ceremony-title h1 span { font-family:"Brother Signature",cursive;color:#b58a4c;font-size:.85em;margin:0 8px; }
+.ceremony-title-date { font:10px/1.5 Gotham,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#9a7752; }
+.ceremony-palace { position:absolute;top:27svh;left:50%;transform:translateX(-50%);width:min(1100px,100vw);height:76svh;overflow:hidden;z-index:1; }
+.ceremony-palace picture img { display:block;width:100%;height:auto;max-width:none; }
+.ceremony-palace::after { content:"";position:absolute;inset:auto 0 0;height:35%;background:linear-gradient(transparent,#fff0e2);pointer-events:none; }
+.ceremony-palace .living-lamps { z-index:4; }.ceremony-palace .brass-lamp { left:19%;bottom:15%; }.ceremony-palace .brass-lamp:nth-child(2) { left:auto;right:19%; }
+.ceremony-floor { position:absolute;bottom:12svh;left:50%;width:420px;height:90px;transform:translateX(-50%) rotateX(55deg);color:#b58a4940;z-index:2; }
+.ceremony-floor svg { width:100%;height:100%; }
+.ceremony-cast { position:absolute;inset:0;z-index:3;pointer-events:none;--actor-height:37svh;--travel:260px;--meeting:95px; }
+.ceremony-person { position:absolute;left:50%;bottom:14svh;height:var(--actor-height);width:auto;opacity:calc(1 - var(--exchange));will-change:transform,opacity; }
+.ceremony-person img { display:block;width:auto;height:100%;max-width:none;filter:drop-shadow(0 8px 5px #68461f1f); }
+.ceremony-groom { transform:translateX(calc(-50% - var(--travel) + var(--approach) * (var(--travel) - var(--meeting)))); }
+.ceremony-bride { transform:translateX(calc(-50% + var(--travel) - var(--approach) * (var(--travel) - var(--meeting)))); }
+.ceremony-exchange { position:absolute;bottom:14svh;left:50%;height:var(--actor-height);transform:translateX(-50%) scale(calc(.985 + var(--exchange)*.015));opacity:var(--exchange);will-change:opacity; }
+.ceremony-exchange img { display:block;height:100%;width:auto;max-width:none; }
+.ceremony-radiance { position:absolute;inset:-20% -25%;background:radial-gradient(ellipse,#ffe5a126,transparent 65%);z-index:-1;opacity:var(--finish); }
+.ceremony-narration { position:absolute;bottom:8svh;left:5%;width:90%;height:36px;z-index:6;text-align:center;color:#80522f; }
+.ceremony-narration p { position:absolute;inset:0;font:italic 22px/1.4 IvyOra,serif;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s; }
+[data-phase="arrival"] [data-caption="arrival"],[data-phase="together"] [data-caption="together"],[data-phase="varmala"] [data-caption="varmala"] { opacity:1;transform:none; }
+.ceremony-scroll { position:absolute;bottom:2svh;left:50%;transform:translateX(-50%);z-index:8;display:flex;flex-direction:column;align-items:center;gap:7px;font:8px/1.4 Gotham,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#9b7751;white-space:nowrap; }
+.ceremony-scroll > div { width:120px;height:1px;background:#b7986440; }.ceremony-scroll i { display:block;height:100%;width:100%;background:#a57940;transform:scaleX(var(--progress));transform-origin:left; }
+.ceremony-skip { position:absolute;right:25px;bottom:28px;z-index:9;font:9px/1.5 Gotham,sans-serif;color:#8b6947;text-decoration:underline;text-underline-offset:5px; }
+.ceremony-petal-burst { position:absolute;inset:0;z-index:5;pointer-events:none;opacity:var(--exchange); }
+.ceremony-petal-burst i { position:absolute;top:20%;width:11px;height:17px;border-radius:80% 20% 70% 30%;background:linear-gradient(135deg,#eed3bb,#b66357);animation:ceremony-petals 6s linear infinite; }
+@keyframes ceremony-petals { from { transform:translateY(0) rotate(0deg);opacity:0; } 15% { opacity:.8; } to { transform:translate(40px,65svh) rotate(290deg);opacity:0; } }
+.family-invitation { position:relative;padding:70px 24px 180px;text-align:center;background:#fff0e2;color:#795238; }
+.family-invitation > img { display:block;width:65px;height:auto;margin:0 auto 22px; }
+.family-invitation .eyebrow { font-size:14px;letter-spacing:.08em;margin-bottom:28px; }
+.family-hosts { font:500 clamp(14px,1.5vw,19px)/1.8 Gotham,sans-serif;color:#a56b45; }
+.family-request { font:400 clamp(18px,2vw,25px)/1.65 IvyOra,serif;margin:16px auto 24px; }
+.family-invitation h2 { font:400 clamp(55px,6vw,82px)/1.1 IvyOra,serif;color:#9c633e; }
+.family-invitation h2 span { display:block;font:38px/1.5 "Brother Signature",cursive; }
+.family-relation { font:20px/1.5 IvyOra,serif;margin-top:24px; }.family-date { font:10px/1.5 Gotham,sans-serif;letter-spacing:.2em;text-transform:uppercase;margin:32px 0; }
+.family-invitation .script-accent { font-size:clamp(30px,4vw,46px);margin-bottom:22px; }
+.family-invitation > a { display:inline-flex;padding:12px; }
+.couple-cinema { position:relative;isolation:isolate;height:100svh;min-height:600px;max-height:1100px;overflow:hidden;background:#171410;color:#fff3df; }
+.couple-cinema-backdrop { position:absolute;inset:-30px;background:linear-gradient(#24180e66,#24180ecc),url('/video/couple-reel-poster.webp') center/cover;filter:blur(24px);opacity:.55; }
+.couple-cinema video { position:absolute;inset:0;width:100%;height:100%;object-fit:contain; }
+.couple-cinema-shade { position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#18130fbd,transparent 45%,transparent 65%,#18130f77),linear-gradient(0deg,#18130fa6,transparent 35%); }
+.couple-cinema-copy { position:absolute;left:7%;top:42%;z-index:2; }
+.couple-cinema-copy .eyebrow { color:#d5be96;letter-spacing:.3em; }
+.couple-cinema-copy h2 { font:400 clamp(36px,4vw,60px)/1.2 IvyOra,serif;margin-top:20px;text-shadow:0 2px 20px #1b130b70; }.couple-cinema-copy h2 em { font-family:"Brother Signature",cursive;font-style:normal;font-size:1.2em;color:#e1c59c; }
+.couple-cinema-copy > p { margin-top:30px;font:9px/1.5 Gotham,sans-serif;letter-spacing:.25em;text-transform:uppercase; }
+.cinema-date { position:absolute;right:5%;top:45%;writing-mode:vertical-rl;font:10px/1.5 Gotham,sans-serif;letter-spacing:.3em; }
+.cinema-control { position:absolute;bottom:30px;right:30px;z-index:3;display:flex;align-items:center;gap:8px;border-bottom:1px solid #dfc49e99;padding:10px 2px;font:10px/1.4 Gotham,sans-serif;color:#fff0d7;cursor:pointer; }
+@media(max-width:700px) {
+ .varmala-story { height:285svh; }.varmala-stage { min-height:540px; }
+ .ceremony-title { top:8svh; }.ceremony-title > p:first-child { font-size:13px;margin-bottom:12px; }.ceremony-title .eyebrow { font-size:7px; }.ceremony-title h1 { font-size:43px; }.ceremony-title-date { font-size:8px;letter-spacing:.09em; }
+ .ceremony-florals { width:150%;left:-25%; }
+ .ceremony-palace { top:29svh;width:100%;height:72svh; }.ceremony-palace .brass-lamp { left:3%;bottom:16%; }.ceremony-palace .brass-lamp:nth-child(2) { right:3%; }
+ .ceremony-cast { --actor-height:31svh;--travel:30vw;--meeting:47px; }
+ .ceremony-person,.ceremony-exchange { bottom:18svh; }
+ .ceremony-floor { bottom:15svh;width:260px; }
+ .ceremony-narration { bottom:11svh;height:40px; }.ceremony-narration p { font-size:18px; }
+ .ceremony-scroll { bottom:5svh;font-size:7px; }.ceremony-skip { right:0;bottom:1.5svh;width:100%;text-align:center;font-size:8px; }
+ .family-invitation { padding:55px 24px 140px; }.family-invitation .eyebrow { margin-bottom:22px; }.family-invitation h2 { font-size:58px; }.desktop-break { display:none; }
+ .couple-cinema { height:95svh;min-height:560px; }.couple-cinema video { object-fit:cover; }.couple-cinema-shade { background:linear-gradient(0deg,#18130fd9,transparent 65%); }.couple-cinema-copy { left:7%;top:auto;bottom:11%; }.couple-cinema-copy h2 { font-size:35px; }.couple-cinema-copy .eyebrow { font-size:8px; }.couple-cinema-copy > p { margin-top:15px; }.cinema-date { top:8%;font-size:8px; }.cinema-control { bottom:23px;right:23px; }
+}
+@media(max-height:650px) and (min-width:701px) { .ceremony-title { top:3svh; }.ceremony-title h1 { font-size:45px; }.ceremony-palace { top:30svh;width:750px; }.ceremony-cast { --actor-height:35svh; } }
+@media(prefers-reduced-motion:reduce) { .varmala-story { height:100svh; }.varmala-stage { position:relative; }.ceremony-florals,.ceremony-petal-burst i { animation:none!important; }.ceremony-scroll { display:none; }.ceremony-narration p { transition:none; } }
+/* Immersive mandap: the pavilion fills the viewport behind the entire ceremony. */
+.varmala-story { height:245svh; }
+.varmala-stage { background:#eddbc5; }
+.ceremony-environment { position:absolute;inset:0;display:block;z-index:0; }
+.ceremony-environment img { width:100%;height:100%;object-fit:cover;object-position:center;max-width:none; }
+.ceremony-light { z-index:1;background:linear-gradient(180deg,#fff6e930 0%,transparent 25%,transparent 80%,#5d34151a 100%);opacity:1; }
+.ceremony-title { top:4svh;text-shadow:0 1px 18px #fff4ddaa; }
+.ceremony-title h1 { font-size:clamp(44px,6vw,78px); }
+.ceremony-cast { --actor-height:43svh; }
+.ceremony-person,.ceremony-exchange { bottom:14svh; }
+.ceremony-person img { filter:none; }
+.ceremony-exchange { transform:translateX(-50%); }
+.ceremony-radiance { display:none; }
+.ceremony-lamp-layer { position:absolute;inset:0;z-index:2;pointer-events:none; }
+.ceremony-lamp-layer .brass-lamp { left:10%;bottom:10%; }.ceremony-lamp-layer .brass-lamp:nth-child(2) { left:auto;right:10%; }
+.ceremony-narration { bottom:7.5svh;color:#603819;text-shadow:0 1px 10px #fff6e9; }
+.ceremony-scroll { color:#725435; }
+.ceremony-scroll > span { background:#fff4df70;padding:3px 8px; }
+html[data-ceremony-active="true"] .flower-shower { visibility:hidden; }
+html[data-ceremony-active="true"] .flower-shower * { animation-play-state:paused!important; }
+@media(max-width:700px) {
+ .varmala-story { height:245svh; }.ceremony-environment img { object-position:center; }
+ .ceremony-title { top:7svh; }.ceremony-title h1 { font-size:clamp(35px,10.4vw,47px); }.ceremony-title-date { font-size:7px; }
+ .ceremony-cast { --actor-height:min(38svh,75vw); }
+ .ceremony-person,.ceremony-exchange { bottom:18svh; }
+ .ceremony-narration { bottom:10.5svh; }.ceremony-narration p { font-size:17px; }
+ .ceremony-lamp-layer .brass-lamp { left:4%;bottom:12%; }.ceremony-lamp-layer .brass-lamp:nth-child(2) { right:4%; }
+}
+@media(prefers-reduced-motion:reduce) { .varmala-story { height:100svh; } }
+@media(min-width:701px) {
+ .couple-cinema video { left:50%;right:auto;width:auto;min-width:0;height:100%;transform:translateX(-50%);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+}
+.ceremony-title-date { display:inline-block;padding:5px 12px;background:#fff5e3db;color:#76543d; }
+/* Native 24 fps frame sequence with a dedicated portrait composition. */
+.varmala-story { height:300svh; }
+.varmala-stage { min-height:0; }
+.ceremony-frames { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;pointer-events:none;image-rendering:-webkit-optimize-contrast; }
+.ceremony-light { background:linear-gradient(180deg,rgba(255,246,233,0.12) 0%,transparent 14%,transparent 86%,rgba(38,25,14,0.18) 100%);pointer-events:none; }
+.ceremony-title { top:2.5svh;will-change:opacity; }
+.ceremony-title > p:first-child { margin-bottom:5px; }
+.ceremony-title h1 { font-size:clamp(36px,4.5vw,62px);margin:5px 0; }
+.ceremony-narration { bottom:9svh;color:#fff4e2;text-shadow:0 2px 8px #271a0c; }
+.ceremony-scroll,.ceremony-skip { color:#fff4e2;text-shadow:0 1px 6px #271a0c; }
+.ceremony-scroll > span { background:transparent; }
+.ceremony-scroll i { background:#ffe2b1; }
+@media(max-aspect-ratio:1/1) {
+ .ceremony-frames { inset:50% auto auto 50%;width:min(100%,56.25svh);height:auto;aspect-ratio:9/16;transform:translate(-50%,-50%);object-fit:contain;mask-image:linear-gradient(transparent,#000 5%,#000 95%,transparent); }
+ .ceremony-environment img { filter:blur(18px);transform:scale(1.08); }
+}
+@media(max-width:700px) {
+ .ceremony-title { top:4svh; }
+ .ceremony-title h1 { font-size:clamp(32px,9vw,44px); }
+ .ceremony-narration { bottom:13svh; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .varmala-story { height:100svh; }
+ .ceremony-frames,.ceremony-narration { display:none; }
+ .ceremony-environment img { filter:none;transform:none;object-fit:contain; }
+}
+
+.ceremony-frames { opacity:0; }
+.ceremony-frames[data-ready="true"] { opacity:1; }
+.ceremony-narration p { transition:transform .35s; }
+
+
+/* Carry the hero's warm floor into the invitation without a second image scene. */
+.ceremony-exit { position:absolute;inset:auto 0 0;height:22%;z-index:4;pointer-events:none;background:linear-gradient(transparent,#fff0e299 65%,#fff0e2);opacity:var(--ceremony-exit,0); }
+.ceremony-narration,.ceremony-scroll,.ceremony-skip { opacity:calc(1 - var(--ceremony-exit,0)); }
+.story-continuation { position:relative;isolation:isolate;overflow:hidden;text-align:center;background:#fff0e2;color:#704b32;padding:0 24px 42px; }
+.continuation-thread { width:1px;height:70px;background:linear-gradient(#bc966533,#bc9665);margin:0 auto 32px;position:relative; }
+.continuation-thread span { position:absolute;bottom:-3px;left:-3px;width:7px;height:7px;border:1px solid #b99560;transform:rotate(45deg);background:#fff0e2; }
+.continuation-copy { position:relative;z-index:2; }
+.continuation-copy .eyebrow { font-size:9px;color:#a27a51;letter-spacing:.2em; }
+.continuation-copy h2 { font:400 clamp(32px,3.4vw,53px)/1.22 IvyOra,serif;margin:24px 0 18px; }
+.continuation-copy h2 em { color:#ac794f;font-weight:400; }
+.continuation-break { display:none; }
+.continuation-copy > p:last-child { font:20px/1.6 IvyOra,serif;color:#9a7658; }
+.continuation-lamps { position:absolute;inset:0;pointer-events:none; }
+.continuation-lamps .brass-lamp { bottom:30%;left:8%;transform:scale(.8); }
+.continuation-lamps .brass-lamp:nth-child(2) { left:auto;right:8%; }
+.continuation-seal { display:inline-block;font:20px/1.4 IvyOra,serif;letter-spacing:.15em;color:#b98f60;border-bottom:1px solid #cbae8255;padding:32px 28px 18px; }
+.continuation-seal i { font-family:"Brother Signature",cursive;font-size:26px;font-style:normal; }
+.family-invitation { padding-top:26px; }
+@media(max-width:700px) {
+ .continuation-thread { height:44px;margin-bottom:27px; }
+ .story-continuation { padding:0 30px 25px; }
+ .continuation-copy .eyebrow { font-size:7px;letter-spacing:.13em; }
+ .continuation-copy h2 { font-size:34px;margin:20px 0 16px; }
+ .continuation-break { display:block; }
+ .continuation-copy > p:last-child { font-size:17px; }
+ .continuation-lamps .brass-lamp { left:0;bottom:5%;transform:scale(.5); }
+ .continuation-lamps .brass-lamp:nth-child(2) { right:0; }
+ .continuation-seal { padding-top:27px; }
+}
+
+/* ---------- restored family blessing chapter ---------- */
+.family-blessing { position:relative;isolation:isolate;width:100%;height:min(82vw,920px);min-height:680px;overflow:hidden;background:#f7ead7;color:#70432c; }
+.family-blessing-art,.family-blessing-art img { position:absolute;inset:0;display:block;width:100%;height:100%; }
+.family-blessing-art img { object-fit:cover;object-position:center 56%; }
+.family-blessing-wash { position:absolute;inset:0;background:linear-gradient(180deg,#fff4e3cc 0%,transparent 29%,transparent 74%,#fbefe3 100%);pointer-events:none; }
+.family-blessing-copy { position:absolute;z-index:3;top:7%;left:50%;width:min(90%,760px);translate:-50%;text-align:center;text-shadow:0 2px 22px #fff7e7; }
+.family-blessing-copy .eyebrow { color:#92704c; }
+.family-blessing-copy .script-accent { margin:16px 0 0;font-size:clamp(32px,4.2vw,58px);color:#b77b54; }
+.family-blessing-copy h2 { font:400 clamp(40px,4.6vw,70px)/1.05 IvyOra,serif;color:#75462f; }
+.family-blessing .living-lamps { z-index:4; }
+.family-blessing .brass-lamp { left:8%;bottom:5%;transform:scale(.85); }.family-blessing .brass-lamp:nth-child(2) { left:auto;right:8%; }
+.family-havan { position:absolute;z-index:4;left:50%;top:69%;width:75px;height:80px;translate:-50% -50%;filter:drop-shadow(0 0 16px #e79c3a);pointer-events:none; }
+.family-havan i { position:absolute;left:22px;bottom:5px;width:29px;height:65px;border-radius:80% 20% 60% 40%;background:linear-gradient(0deg,#bd4d1e,#f8a92c 55%,#fff2ad);transform-origin:50% 100%;animation:family-fire 1.35s ease-in-out infinite alternate;opacity:.92; }
+.family-havan i:nth-child(2) { left:10px;width:24px;height:48px;animation-delay:-.6s;transform:rotate(-18deg); }.family-havan i:nth-child(3) { left:42px;width:22px;height:43px;animation-delay:-.95s;transform:rotate(16deg); }
+@keyframes family-fire { from { transform:scale(.86,1) rotate(-5deg); } to { transform:scale(1.08,.9) rotate(5deg); } }
+
+/* ---------- continuous full-bleed story polish ---------- */
+main > section { width:100%;max-width:none; }
+.celebrations,.memory-story,.story-venues,#rsvp,.forever-scene { position:relative; }
+.celebrations::before,.memory-story::before,.story-venues::before,#rsvp::before,.forever-scene::before { content:"";position:absolute;z-index:6;top:-2px;left:0;width:100%;height:clamp(45px,7vw,105px);background:linear-gradient(180deg,var(--section-bridge,#fbefe3),transparent);pointer-events:none; }
+.celebrations { --section-bridge:#fbefe3; }.memory-story { --section-bridge:#f7ead7; }.story-venues { --section-bridge:#f7ead7; }.forever-scene { --section-bridge:#fbefe3; }
+.celebrations-content,.memory-story > :not(.memory-canopy),.story-venue-grid,.venue-help { width:min(100%,1480px);margin-inline:auto; }
+.ceremony-frames { image-rendering:auto;transition:opacity .35s ease; }
+
+@media(min-width:1500px) {
+ .celebrations { padding-inline:clamp(36px,4vw,84px); }
+ .celebration-grid { grid-template-columns:repeat(4,minmax(270px,1fr));gap:clamp(22px,2vw,38px); }
+ .memory-story { padding-inline:clamp(36px,4vw,84px); }
+ .story-venue-grid { max-width:1320px; }
+ .story-venue-card { padding-inline:clamp(40px,5vw,74px); }
+ .forever-content { padding-inline:clamp(48px,7vw,120px); }
+}
+
+@media(min-width:701px) {
+ .peacock-gateway { height:min(72svh,760px);aspect-ratio:auto;margin-top:-70px; }
+ .peacock-gateway picture,.peacock-gateway img { width:100%;height:100%; }
+ .peacock-gateway img { object-fit:cover;object-position:center top; }
+ .venue-palace { width:100vw;max-width:none;height:min(80svh,820px);aspect-ratio:auto;margin-left:50%;margin-bottom:-24px;translate:-50%; }
+ .venue-palace picture,.venue-palace picture img { width:100%;height:100%; }
+ .venue-palace picture img { object-fit:cover;object-position:center 42%; }
+}
+
+@media(max-width:700px) {
+ .family-blessing { height:142vw;min-height:600px;max-height:850px; }
+ .family-blessing-art img { object-position:center; }
+ .family-blessing-copy { top:5.5%;width:88%; }
+ .family-blessing-copy .script-accent { margin-top:10px;font-size:35px; }
+ .family-blessing-copy h2 { font-size:38px; }
+ .family-havan { top:63%;transform:scale(.72);transform-origin:center; }
+ .family-blessing .brass-lamp { left:-1%;bottom:2%;transform:scale(.58); }.family-blessing .brass-lamp:nth-child(2) { right:-1%; }
+ .celebration-grid { grid-template-columns:1fr;gap:18px;width:min(100%,430px);margin-inline:auto; }
+ .celebration-card { min-height:390px;padding-inline:clamp(30px,10vw,48px); }
+ .story-venue-grid,.venue-help { width:100%; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+ .family-havan i { animation:none!important; }
+}
+
+/* ---------- scroll-open heirloom invitation v3 ---------- */
+html { scrollbar-width:none; }
+html::-webkit-scrollbar { display:none;width:0;height:0; }
+body { -ms-overflow-style:none; }
+html[data-envelope-active="true"] .music-dock { opacity:0;pointer-events:none;transform:translateY(-10px); }
+html[data-envelope-active="true"] .flower-shower { opacity:0; }
+.music-dock { transition:opacity .35s ease,transform .35s ease; }
+.flower-shower { transition:opacity .35s ease; }
+.invitation-opening { --envelope-progress:0;--envelope-open:0;--invitation-rise:0;--envelope-exit:0;position:relative;inset:auto;z-index:31;display:block;width:100%;height:390svh;overflow:visible;background:#efe6da;color:#6f382d;perspective:none;transition:none; }
+.opening-stage { position:sticky;top:0;width:100%;height:100svh;min-height:560px;overflow:hidden;isolation:isolate;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 43%,#fffaf0 0%,#f2e5d6 58%,#dfc5ad 115%); }
+.opening-stage::before { content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,#fff8e3aa 48%,transparent 68%);transform:translateX(calc(-72% + var(--envelope-progress) * 145%));opacity:.52;pointer-events:none; }
+.opening-stage::after { content:"";position:absolute;z-index:12;inset:auto 0 0;height:18%;background:linear-gradient(transparent,#f6e5d8);opacity:var(--envelope-exit);pointer-events:none; }
+.opening-ambient { position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:calc(1 - var(--envelope-exit)); }
+.opening-ambient::before,.opening-ambient::after { content:"";position:absolute;width:48vmax;aspect-ratio:1;border:1px solid #b58c6045;border-radius:50%;top:50%;left:50%;translate:-50% -50%;box-shadow:0 0 0 8vmax #c6a4730a,0 0 0 16vmax #c6a4730a; }
+.opening-ambient::after { width:38vmax;border-style:dotted;animation:opening-orbit 70s linear infinite; }
+.opening-ambient i { position:absolute;width:9px;height:14px;border-radius:80% 20% 70% 30%;background:#c9897a77;filter:blur(.1px);animation:opening-petal 9s ease-in-out infinite; }
+.opening-ambient i:first-child { left:15%;top:22%; }.opening-ambient i:nth-child(2) { right:17%;top:17%;animation-delay:-3s; }.opening-ambient i:nth-child(3) { right:24%;bottom:18%;animation-delay:-6s; }
+.opening-kicker { position:absolute;z-index:8;top:max(28px,5.5svh);left:50%;width:90%;translate:-50%;text-align:center;opacity:calc(1 - var(--envelope-open));transform:translateY(calc(var(--envelope-open) * -18px)); }
+.opening-kicker span { font:400 clamp(14px,1.2vw,18px)/1.5 var(--font-hindi);color:#a06c49; }
+.opening-kicker p { margin-top:8px;font:500 9px/1.4 Gotham,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#8c6750; }
+.opening-envelope { position:relative;z-index:3;width:min(76vw,1080px);aspect-ratio:16/9;filter:drop-shadow(0 34px 40px #49261f3d);transform-style:preserve-3d;animation:none;transition:none;opacity:calc(1 - var(--envelope-exit) * .82);transform:translateY(calc(3svh - var(--envelope-exit) * 9svh)) scale(calc(1 - var(--envelope-exit) * .08)); }
+.opening-liner { position:absolute;z-index:1;inset:1.4%;background:url('/artwork/envelope-palace-liner-v3.webp') center/cover no-repeat;clip-path:polygon(0 0,100% 0,50% 76%);filter:drop-shadow(0 4px 5px #5d35273a); }
+.opening-card { position:absolute;z-index:3;inset:8% 10% 7%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fffaf0 url('/artwork/envelope-palace-liner-v3.webp') center/cover no-repeat;border:1px solid #b793557d;box-shadow:0 12px 32px #4f2c2533;opacity:calc(.08 + var(--invitation-rise) * .92);transform:translateY(calc(24% - var(--invitation-rise) * 42%)) scale(calc(.94 + var(--invitation-rise) * .06));transition:none; }
+.opening-card::before { content:"";position:absolute;inset:8px;border:1px solid #d5b77280;clip-path:polygon(0 0,100% 0,100% 100%,0 100%); }
+.opening-card > span { position:relative;font:400 clamp(12px,1.15vw,17px)/1.5 var(--font-hindi);color:#9b6342; }
+.opening-card > p { position:relative;margin:1.2em 0 .55em;font:500 clamp(8px,.7vw,11px)/1.4 Gotham,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#9c7657; }
+.opening-card h2 { position:relative;font:400 clamp(42px,5.7vw,82px)/1 IvyOra,serif;letter-spacing:-.045em;color:#713c31;white-space:nowrap; }
+.opening-card h2 i { padding:0 .08em;font:400 1.02em/1 "Brother Signature",cursive;color:#b68345; }
+.opening-card small { position:relative;margin-top:1.35em;font:500 clamp(7px,.62vw,10px)/1.5 Gotham,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#9f8061; }
+.opening-card > b { position:relative;margin-top:1.1em;font:500 clamp(9px,.7vw,12px)/1.5 Gotham,sans-serif;letter-spacing:.3em;color:#865944; }
+.opening-pocket { position:absolute;z-index:4;inset:0;background:url('/artwork/envelope-royal-exterior-v3.webp') center/cover no-repeat;clip-path:polygon(0 35%,50% 72%,100% 35%,100% 100%,0 100%);filter:brightness(.98); }
+.opening-flap { position:absolute;z-index:6;inset:0;background:url('/artwork/envelope-royal-exterior-v3.webp') center/cover no-repeat;clip-path:polygon(0 0,100% 0,50% 70%);transform-origin:50% 0;transform:rotateX(calc(var(--envelope-open) * -178deg));filter:brightness(calc(1 - var(--envelope-open) * .18));transition:none;backface-visibility:hidden; }
+.opening-seal { position:absolute;z-index:8;left:50%;top:62%;display:flex;align-items:center;justify-content:center;gap:3px;width:clamp(68px,6.5vw,96px);aspect-ratio:1;border-radius:47% 53% 51% 49%;background:radial-gradient(circle at 34% 26%,#ce7c58,#8d352e 64%,#68251f);color:#f0cb8e;box-shadow:inset 0 0 0 4px #efb47835,0 9px 18px #35161366;opacity:calc(1 - var(--envelope-open) * 1.8);transform:translate(-50%,-50%) scale(calc(1 - var(--envelope-open) * .18)) rotate(calc(var(--envelope-open) * 13deg));transition:none; }
+.opening-seal::before { content:"";position:absolute;inset:9px;border:1px solid #f3cf9099;border-radius:50%; }
+.opening-seal b { font:400 clamp(18px,1.75vw,26px)/1 var(--font-hindi); }.opening-seal span { font:400 13px/1 IvyOra,serif; }
+.opening-scroll { position:absolute;z-index:9;bottom:max(20px,4svh);left:50%;translate:-50%;display:flex;flex-direction:column;align-items:center;gap:7px;color:#7f5b48;opacity:calc(1 - var(--invitation-rise) * 1.3);font:500 8px/1.4 Gotham,sans-serif;letter-spacing:.2em;text-transform:uppercase; }
+.opening-scroll > i { display:block;width:100px;height:1px;background:#a7866850;overflow:hidden; }.opening-scroll > i b { display:block;width:100%;height:100%;background:#93684e;transform:scaleX(var(--envelope-progress));transform-origin:left; }
+.opening-next { position:absolute;z-index:14;bottom:8svh;left:50%;translate:-50%;width:90%;text-align:center;font:400 clamp(27px,3vw,44px)/1.2 "Brother Signature",cursive;color:#9d674b;opacity:var(--envelope-exit);transform:translateY(calc((1 - var(--envelope-exit)) * 15px)); }
+@keyframes opening-orbit { to { rotate:360deg; } }
+@keyframes opening-petal { 0%,100% { transform:translate3d(0,0,0) rotate(0);opacity:.2; } 50% { transform:translate3d(25px,45px,0) rotate(150deg);opacity:.75; } }
+
+/* Full-screen venue chapter: artwork, title and lamps share one composition. */
+.story-venues { padding:0!important;overflow:hidden; }
+.venue-intro { position:relative;width:100%;height:100svh;min-height:650px;overflow:hidden;isolation:isolate;background:#eee0ce; }
+.venue-intro .venue-palace { position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;translate:none;aspect-ratio:auto; }
+.venue-intro .venue-palace picture,.venue-intro .venue-palace picture img { display:block;width:100%;height:100%; }
+.venue-intro .venue-palace picture img { position:absolute;inset:0;object-fit:cover;object-position:center 48%; }
+.venue-intro .venue-palace::after { z-index:2;height:58%;background:linear-gradient(transparent 5%,#3f241b50 68%,#2f1a14a8); }
+.venue-intro .venue-heading { position:absolute;z-index:5;left:50%;bottom:8.5svh;width:min(92%,900px);translate:-50%;margin:0;color:#fff5e7;text-shadow:0 2px 20px #321912; }
+.venue-intro .venue-heading .eyebrow { color:#f2d6a8; }.venue-intro .venue-heading .script-accent { color:#f4cda1; }.venue-intro .venue-heading h2 { color:#fff7e9; }
+.venue-intro .living-lamps { display:none; }
+.venue-discover { position:absolute;z-index:6;right:3%;bottom:4%;font:500 8px/1.5 Gotham,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#f5dfbd; }
+.story-venue-grid { padding:clamp(65px,7vw,110px) 24px 0; }
+.venue-help { padding-inline:24px;padding-bottom:70px; }
+
+@media(max-width:700px) {
+ .invitation-opening { height:350svh; }
+ .opening-stage { min-height:520px; }
+ .opening-kicker { top:max(20px,4svh); }.opening-kicker p { font-size:7px; }
+ .opening-envelope { width:94vw;aspect-ratio:4/5;transform:translateY(calc(2svh - var(--envelope-exit) * 8svh)) scale(calc(1 - var(--envelope-exit) * .08)); }
+ .opening-liner,.opening-card { background-position:center;background-size:auto 100%; }
+ .opening-card { inset:9% 7% 7%;transform:translateY(calc(22% - var(--invitation-rise) * 38%)) scale(calc(.95 + var(--invitation-rise) * .05)); }
+ .opening-card h2 { max-width:84%;font-size:clamp(32px,9.6vw,38px);line-height:1.02;white-space:normal;text-wrap:balance; }
+ .opening-card > p { max-width:78%;font-size:7px;line-height:1.7; }.opening-card small { font-size:6px; }.opening-card > b { font-size:8px; }
+ .opening-pocket,.opening-flap { background-size:auto 100%; }
+ .opening-flap { clip-path:polygon(0 0,100% 0,50% 58%); }
+ .opening-pocket { clip-path:polygon(0 29%,50% 60%,100% 29%,100% 100%,0 100%); }
+ .opening-seal { top:54%;width:70px; }
+ .opening-next { bottom:7svh;font-size:30px; }
+ .venue-intro { min-height:590px; }
+ .venue-intro .venue-palace { width:100%;height:100%;margin:0;translate:none; }
+ .venue-intro .venue-palace picture img { object-position:center; }
+ .venue-intro .venue-heading { bottom:10svh;width:88%; }.venue-intro .venue-heading h2 { font-size:42px; }
+ .venue-intro .venue-heading .script-accent { font-size:38px; }
+ .venue-discover { right:auto;left:50%;bottom:3%;translate:-50%;white-space:nowrap; }
+ .story-venue-grid { padding-inline:18px; }.venue-help { padding-inline:18px;padding-bottom:45px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+ .invitation-opening { height:100svh;--envelope-open:1!important;--invitation-rise:1!important;--envelope-exit:0!important; }
+ .opening-ambient::after,.opening-ambient i { animation:none!important; }
+ .opening-scroll { display:none; }
+}
+
+/* Full-bleed royal Rajasthani folio: the viewport itself is the envelope. */
+.opening-stage { background:#350809;perspective:1800px; }
+.opening-stage::before { z-index:10;mix-blend-mode:screen;opacity:.22; }
+.opening-kicker { z-index:11;color:#f5d999;text-shadow:0 2px 12px #210000; }
+.opening-kicker span,.opening-kicker p { color:inherit; }
+.opening-envelope {
+  width:100vw;height:100svh;aspect-ratio:auto;max-width:none;
+  filter:none;transform:none;opacity:calc(1 - var(--envelope-exit));
+}
+.opening-liner {
+  inset:0;clip-path:none;filter:none;
+  background:url('/artwork/envelope-palace-interior-v4.webp') center/cover no-repeat;
+}
+.opening-card {
+  inset:0;z-index:5;border:0;box-shadow:none;
+  background:#f8f0df url('/artwork/envelope-palace-interior-v4.webp') center/cover no-repeat;
+  padding:clamp(90px,15svh,160px) 18vw clamp(170px,23svh,250px);
+  opacity:var(--invitation-rise);
+  transform:translateY(calc(11svh - var(--invitation-rise) * 11svh)) scale(calc(.975 + var(--invitation-rise) * .025));
+}
+.opening-card::before { display:none; }
+.opening-card > span { font-size:clamp(14px,1.15vw,19px);color:#8b5b2d; }
+.opening-card > p { margin:1.1em 0 .45em;color:#735537; }
+.opening-card h2 { font-size:clamp(55px,7vw,108px);color:#641d20;text-shadow:0 1px #fff; }
+.opening-card h2 i { color:#a66f25; }
+.opening-card small,.opening-card > b { color:#72512f; }
+.opening-blessing { position:relative;display:flex;flex-direction:column;align-items:center;gap:10px; }
+.opening-blessing > span { font:500 clamp(13px,1.05vw,18px)/1.3 var(--font-hindi);color:#885626;letter-spacing:.04em; }
+.opening-blessing > p { font:500 clamp(8px,.63vw,10px)/1.4 Gotham,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#745331; }
+.opening-emblem { display:grid;grid-template-columns:52px 9px 52px;align-items:center;gap:9px;color:#ac7b35; }
+.opening-emblem b { height:1px;background:linear-gradient(90deg,transparent,currentColor); }
+.opening-emblem b:last-child { background:linear-gradient(90deg,currentColor,transparent); }
+.opening-emblem em { width:8px;aspect-ratio:1;border:1px solid currentColor;rotate:45deg;background:#f5e6c5;box-shadow:0 0 0 3px #f7edda; }
+.opening-names { display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;width:min(78vw,1160px);margin:clamp(18px,2.5svh,30px) auto 0;white-space:nowrap; }
+.opening-names > span { font:400 clamp(66px,7.7vw,118px)/.82 Miofarin,IvyOra,serif;letter-spacing:-.055em;color:#6c2022;text-shadow:0 1px #fff,0 5px 25px #8e633014; }
+.opening-names > span:first-child { text-align:right; }
+.opening-names > span:last-child { text-align:left; }
+.opening-names > i { display:grid;place-items:center;width:clamp(54px,5.2vw,78px);aspect-ratio:1;margin-inline:clamp(12px,2vw,34px);border:1px solid #b98a44;border-radius:50%;font:400 clamp(30px,3.3vw,50px)/1 "Brother Signature",cursive;color:#9c6926;background:radial-gradient(circle,#fffaf0 35%,#eddbb9aa);box-shadow:0 0 0 5px #fff8ea,0 0 0 6px #c99f5b73; }
+.opening-details { display:flex;flex-direction:column;align-items:center;margin-top:clamp(22px,3svh,38px); }
+.opening-details small { font:400 clamp(10px,.8vw,13px)/1.65 IvyOra,serif;letter-spacing:.08em;color:#67482d;text-transform:none; }
+.opening-date { display:flex;align-items:center;margin-top:clamp(15px,2svh,24px);color:#6d2825; }
+.opening-date b { min-width:60px;font:500 clamp(17px,1.55vw,24px)/1 IvyOra,serif;letter-spacing:.12em; }
+.opening-date span { padding:0 clamp(18px,2.2vw,34px);border-inline:1px solid #b18a55;font:500 clamp(9px,.68vw,11px)/1.2 Gotham,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#95652d; }
+.opening-details > p { margin-top:12px;font:500 clamp(7px,.58vw,9px)/1.4 Gotham,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#84643f; }
+.opening-pocket {
+  inset:0;background:url('/artwork/envelope-royal-exterior-v4.webp') center/cover no-repeat;
+  clip-path:polygon(0 39%,50% 59%,100% 39%,100% 100%,0 100%);filter:none;
+}
+.opening-flap {
+  inset:0;background:url('/artwork/envelope-royal-exterior-v4.webp') center/cover no-repeat;
+  clip-path:polygon(0 0,100% 0,100% 41%,50% 62%,0 41%);
+  transform-origin:50% 0;filter:brightness(calc(1 - var(--envelope-open) * .22));
+}
+.opening-seal { display:none; }
+.opening-scroll { z-index:13;color:#f4d99f;text-shadow:0 1px 8px #1c0000;bottom:max(18px,3svh); }
+.opening-scroll > i { background:#f1d79c55; }.opening-scroll > i b { background:#f5d799; }
+.opening-next { color:#f4d9aa;text-shadow:0 2px 16px #3b0808; }
+html[data-invitation-hold="true"] .opening-card::after { content:"A moment to take it in";position:absolute;left:50%;bottom:4.5svh;translate:-50%;font:500 7px/1.4 Gotham,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#8a673f;animation:hold-breathe 2s ease-in-out both;white-space:nowrap; }
+@keyframes hold-breathe { 0% { opacity:0;transform:translateY(6px); } 25%,75% { opacity:.72;transform:none; } 100% { opacity:0;transform:translateY(-4px); } }
+
+/* Soft chapter joins keep each scene visually connected to the next. */
+.chapter-blend { --blend:#f5e7d8;position:relative;z-index:24;height:clamp(72px,9vw,126px);margin-block:clamp(-63px,-4.5vw,-36px);pointer-events:none;overflow:hidden;isolation:isolate;backdrop-filter:blur(15px) saturate(1.08);-webkit-backdrop-filter:blur(15px) saturate(1.08);mask-image:linear-gradient(transparent,#000 28%,#000 72%,transparent); }
+.chapter-blend::before { content:"";position:absolute;inset:-40%;background:radial-gradient(ellipse at center,var(--blend) 0%,color-mix(in srgb,var(--blend) 72%,transparent) 38%,transparent 72%);filter:blur(18px); }
+.chapter-blend::after { content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);transform:translateX(-100%);animation:chapter-glint 9s ease-in-out infinite; }
+.chapter-blend i { position:absolute;left:18%;top:50%;width:5px;aspect-ratio:1;border-radius:50%;background:#d7ac6b;box-shadow:0 0 18px #d7ac6baa;animation:chapter-dust 5.5s ease-in-out infinite alternate; }
+.chapter-blend i:nth-child(2) { left:49%;animation-delay:-1.8s; }.chapter-blend i:nth-child(3) { left:80%;animation-delay:-3.4s; }
+.chapter-blend-light { --blend:#faecdf; }.chapter-blend-warm { --blend:#e7c8aa; }.chapter-blend-dark { --blend:#45251f; }
+@keyframes chapter-glint { 0%,55% { transform:translateX(-100%);opacity:0; } 72% { opacity:.65; } 100% { transform:translateX(100%);opacity:0; } }
+@keyframes chapter-dust { from { transform:translate(-8px,7px) scale(.7);opacity:.15; } to { transform:translate(8px,-8px) scale(1.25);opacity:.75; } }
+@media(prefers-reduced-motion:reduce) { .chapter-blend::after,.chapter-blend i { animation:none; }.chapter-blend { backdrop-filter:blur(8px); } }
+
+/* Desktop hero uses clean native character plates; portrait keeps the animated film. */
+@media(min-aspect-ratio:1/1) {
+ .ceremony-frames { display:none; }
+ .ceremony-environment img { object-position:center center; }
+ .ceremony-cast { display:block;--actor-height:min(64svh,690px);--travel:min(31vw,480px);--meeting:min(9vw,135px);z-index:3; }
+ .ceremony-person,.ceremony-exchange { bottom:4.5svh; }
+ .ceremony-person { opacity:calc(1 - var(--exchange)); }
+ .ceremony-groom { transform:translateX(calc(-50% - var(--travel) + var(--approach) * (var(--travel) - var(--meeting)))); }
+ .ceremony-bride { transform:translateX(calc(-50% + var(--travel) - var(--approach) * (var(--travel) - var(--meeting)))); }
+ .ceremony-exchange { opacity:var(--exchange);transform:translateX(-50%) scale(calc(.96 + var(--finish) * .04)); }
+ .ceremony-person img,.ceremony-exchange img { filter:drop-shadow(0 18px 18px #56351c3f);image-rendering:auto; }
+}
+@media(max-aspect-ratio:1/1) { .ceremony-cast { display:none; } }
+
+/* Native scroll-scrubbed film: video time follows page progress in both directions. */
+.ceremony-video {
+ position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;
+ background:#ead8c2;pointer-events:none;transform:translateZ(0);
+}
+.ceremony-cast,.ceremony-frames { display:none!important; }
+@media(max-aspect-ratio:1/1) {
+ .ceremony-video { object-position:center; }
+ .ceremony-environment img { filter:none;transform:none;object-fit:cover; }
+}
+
+@media(max-width:700px) {
+ .opening-envelope { width:100vw;height:100svh;aspect-ratio:auto; }
+ .opening-liner { background-image:url('/artwork/envelope-palace-mobile-v5.webp');background-size:cover;background-position:center; }
+ .opening-card { background-image:url('/artwork/envelope-palace-mobile-v5.webp');background-size:cover;background-position:center; }
+ .opening-pocket,.opening-flap { background-image:url('/artwork/envelope-royal-mobile-v5.webp');background-size:cover;background-position:center; }
+ .opening-card { inset:0;justify-content:flex-start;padding:15svh 8vw 20svh;transform:translateY(calc(6svh - var(--invitation-rise) * 6svh)) scale(calc(.985 + var(--invitation-rise) * .015)); }
+ .opening-blessing { gap:7px; }.opening-blessing > span { font-size:13px; }.opening-blessing > p { font-size:7px;letter-spacing:.24em; }
+ .opening-emblem { grid-template-columns:34px 7px 34px;gap:7px; }.opening-emblem em { width:6px; }
+ .opening-names { display:flex;flex-direction:column;width:100%;margin-top:2.2svh;white-space:normal; }
+ .opening-names > span { font-size:clamp(55px,16.5vw,72px);line-height:.76;letter-spacing:-.045em;text-align:center!important; }
+ .opening-names > i { width:40px;margin:10px 0 9px;font-size:25px;box-shadow:0 0 0 3px #fff8ea,0 0 0 4px #c99f5b73; }
+ .opening-details { margin-top:2.7svh; }.opening-details small { font-size:10px;line-height:1.5;letter-spacing:.045em; }
+ .opening-date { margin-top:2svh; }.opening-date b { min-width:48px;font-size:15px; }.opening-date span { padding:0 13px;font-size:8px;letter-spacing:.22em; }
+ .opening-details > p { margin-top:10px;font-size:7px;letter-spacing:.22em; }
+ .opening-flap { clip-path:polygon(0 0,100% 0,100% 43%,80% 45%,60% 50%,50% 52%,40% 50%,20% 45%,0 43%); }
+ .opening-pocket { clip-path:polygon(0 42%,20% 44%,40% 49%,50% 51%,60% 49%,80% 44%,100% 42%,100% 100%,0 100%); }
+}
+
+@media(max-width:700px) {
+ .drifting-blossom:nth-child(-n+16) { display:block; }
+ .drifting-blossom:nth-child(n+17) { display:none; }
+ .flower-shower { perspective:620px; }
+ .drifting-blossom { width:var(--size);height:var(--size); }
+}

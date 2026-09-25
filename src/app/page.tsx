@@ -1,7 +1,7 @@
 import { FlowerShower } from "@/components/site/LivingDecor";
+import CoupleFilm from "@/components/site/CoupleFilm";
 import Hero from "@/components/site/Hero";
-
-
+import TempleScene from "@/components/site/TempleScene";
 import Events from "@/components/site/Events";
 import GalleryStack from "@/components/site/GalleryStack";
 import Venue from "@/components/site/Venue";
@@ -11,6 +11,9 @@ import Footer from "@/components/site/Footer";
 import { wedding } from "@/lib/wedding";
 import MusicToggle from "@/components/site/MusicToggle";
 import StoryMotion from "@/components/site/StoryMotion";
+import OpeningEnvelope from "@/components/site/OpeningEnvelope";
+import FamilyBlessing from "@/components/site/FamilyBlessing";
+import ChapterBlend from "@/components/site/ChapterBlend";
 
 export default function HomePage() {
   const jsonLd = {
@@ -32,7 +35,7 @@ export default function HomePage() {
         addressCountry: "IN",
       },
     },
-    image: ["/artwork/cd0d21ec3e1a409a.webp", "/images/ayusha-deepak-3.jpg"],
+    image: ["/video/ceremony-scroll-desktop-poster.webp", "/images/ayusha-deepak-3.jpg"],
     description:
       "Deepak weds Ayusha — wedding celebrations in Greater Noida West on 8th and 9th December 2026.",
     organizer: {
@@ -51,11 +54,24 @@ export default function HomePage() {
       <MusicToggle />
       <FlowerShower />
       <main>
+        <OpeningEnvelope />
+        <ChapterBlend tone="warm" />
         <Hero />
+        <ChapterBlend tone="light" />
+        <TempleScene />
+        <ChapterBlend tone="light" />
+        <FamilyBlessing />
+        <ChapterBlend tone="warm" />
         <Events />
+        <ChapterBlend tone="dark" />
+        <CoupleFilm />
+        <ChapterBlend tone="dark" />
         <GalleryStack />
+        <ChapterBlend tone="light" />
         <Venue />
+        <ChapterBlend tone="warm" />
         <Rsvp />
+        <ChapterBlend tone="dark" />
         <CountdownScene />
       </main>
       <Footer />

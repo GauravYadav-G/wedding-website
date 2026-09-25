@@ -31,3 +31,14 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# scratch video frames and raw video sources
+/public/video/ceremony-v2/
+/public/video/mandap-frames/
+/public/video/mandap-motion/
+/public/video/Reel V2.mp4
+/public/video/a1.mp4
+/public/video/a2.mp4
+/public/video/Generate_an_*.mp4
+/public/video/now_generat_for_portnait.mp4
+/public/video/mandap-*-poster.webp
