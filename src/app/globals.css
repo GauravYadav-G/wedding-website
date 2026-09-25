@@ -855,8 +855,25 @@ main > section { width:100%;max-width:none; }
  .family-blessing-copy .script-accent { margin-top:10px;font-size:35px; }
  .family-blessing-copy h2 { font-size:38px; }
  .family-blessing .brass-lamp { left:-1%;bottom:2%;transform:scale(.58); }.family-blessing .brass-lamp:nth-child(2) { right:-1%; }
- .celebration-grid { grid-template-columns:1fr;gap:18px;width:min(100%,430px);margin-inline:auto; }
- .celebration-card { min-height:390px;padding-inline:clamp(30px,10vw,48px); }
+ .celebration-grid { grid-template-columns:minmax(0,1fr);gap:20px;width:min(100%,340px);margin-inline:auto; }
+ .celebration-card {
+  box-sizing:border-box;
+  width:100%;aspect-ratio:auto;min-height:560px;
+  padding:110px 18% 140px;
+  background-size:100% 100%;
+ }
+ .celebration-card > * { flex-shrink:0;max-width:100%; }
+ .celebration-card .ceremony-hindi { font-size:14px;line-height:1.4; }
+ .celebration-card h3 { font-size:30px;line-height:1.15;margin:6px 0 16px; }
+ .celebration-card .ceremony-date { gap:10px;padding-top:12px;max-width:100%; }
+ .celebration-card .ceremony-date strong { font-size:38px;flex-shrink:0; }
+ .celebration-card .ceremony-date span { font-size:10px;letter-spacing:0; }
+ .celebration-card .ceremony-time { font-size:14px;line-height:1.5;margin:14px 0 6px; }
+ .celebration-card .ceremony-venue { font-size:14px;line-height:1.5;min-height:42px;max-width:100%;margin-bottom:10px;overflow-wrap:break-word; }
+ .celebration-card .ceremony-actions { box-sizing:border-box;gap:8px;width:100%;padding:8px 0 0;margin-top:8px; }
+ .celebration-card .ceremony-actions a { min-height:44px;font-size:12px; }
+ .celebration-card .ceremony-actions a:last-child { min-width:44px;justify-content:center; }
+ .celebration-card .ceremony-actions svg { flex-shrink:0; }
  .story-venue-grid,.venue-help { width:100%; }
 }
 
@@ -1066,30 +1083,48 @@ html[data-invitation-hold="true"] .opening-card::after { content:"A moment to ta
  .drifting-blossom { width:var(--size);height:var(--size); }
 }
 
-/* Final interaction layer: click/tap on the AA seal opens the invitation. */
+/* The envelope overlays the invitation and leaves no space after dismissal. */
 .invitation-opening {
+ position:fixed;
+ inset:0;
+ z-index:1000;
+ background:transparent;
+ overflow:hidden;
+ opacity:1;
+ transition:opacity .95s cubic-bezier(.4,0,.2,1);
  height:100svh!important;
  --envelope-open:0;
  --invitation-rise:0;
  --opening-exit:0;
 }
-.opening-stage { position:relative!important; }
+.opening-stage { position:relative!important;background:transparent;min-height:0;perspective:2400px; }
+.opening-stage::before,.opening-stage::after { display:none; }
+.opening-kicker { transition:opacity .3s ease; }
+.invitation-opening:not([data-phase="sealed"]) .opening-kicker { opacity:0; }
 .opening-envelope {
  pointer-events:auto;
  opacity:1!important;
  transform:none!important;
- transition:opacity .72s ease,transform .9s cubic-bezier(.22,.8,.22,1)!important;
+ transition:opacity .9s ease,transform 1.15s cubic-bezier(.16,1,.3,1),filter .9s ease!important;
 }
 .opening-liner,.opening-pocket,.opening-flap,.opening-card { pointer-events:none; }
 .opening-flap {
+ z-index:7;
+ backface-visibility:visible;
  transform:rotateX(0)!important;
  filter:none!important;
- transition:transform 1.28s cubic-bezier(.19,.78,.18,1)!important;
+ opacity:1;
+ transition:transform 1.8s cubic-bezier(.45,0,.16,1),opacity .65s ease .85s!important;
+}
+.opening-pocket {
+ z-index:6;
+ transform:translateY(0);
+ transition:transform 1.65s cubic-bezier(.32,0,.16,1) .35s;
 }
 .opening-card {
  opacity:0!important;
- transform:translateY(5svh) scale(.985)!important;
- transition:opacity .72s ease .58s,transform 1.05s cubic-bezier(.18,.8,.2,1) .5s!important;
+ transform:translateY(2svh) scale(.995)!important;
+ transition:opacity 1.15s ease .4s,transform 1.65s cubic-bezier(.16,1,.3,1) .4s!important;
 }
 .opening-trigger {
  display:grid!important;
@@ -1102,11 +1137,23 @@ html[data-invitation-hold="true"] .opening-card::after { content:"A moment to ta
  border:0;
  cursor:pointer;
 }
+.invitation-opening[data-phase="releasing"] .opening-trigger {
+ opacity:0;
+ transform:scale(1.12) translateY(-6px);
+ pointer-events:none!important;
+}
+.invitation-opening[data-phase="releasing"] .opening-scroll { opacity:0!important; }
 .opening-scroll { opacity:1!important;transition:opacity .35s ease!important; }
 .opening-next { opacity:0!important;transition:opacity .65s ease!important; }
 .invitation-opening[data-phase="opening"] .opening-flap,
 .invitation-opening[data-phase="revealed"] .opening-flap,
-.invitation-opening[data-phase="exiting"] .opening-flap { transform:rotateX(-178deg)!important; }
+.invitation-opening[data-phase="exiting"] .opening-flap {
+ transform:translateY(-65%) rotateX(-72deg)!important;
+ opacity:0;
+}
+.invitation-opening[data-phase="opening"] .opening-pocket,
+.invitation-opening[data-phase="revealed"] .opening-pocket,
+.invitation-opening[data-phase="exiting"] .opening-pocket { transform:translateY(105%); }
 .invitation-opening[data-phase="opening"] .opening-trigger,
 .invitation-opening[data-phase="revealed"] .opening-trigger,
 .invitation-opening[data-phase="exiting"] .opening-trigger,
@@ -1121,8 +1168,88 @@ html[data-invitation-hold="true"] .opening-card::after { content:"A moment to ta
 }
 .invitation-opening[data-phase="revealed"] .opening-next { opacity:1!important; }
 .invitation-opening[data-phase="exiting"] .opening-envelope {
- opacity:0!important;
- transform:scale(1.035)!important;
+ opacity:1!important;
+ transform:translateY(-1svh) scale(1.015)!important;
+ filter:none!important;
+}
+.invitation-opening[data-phase="exiting"] { opacity:0;pointer-events:none; }
+#invitation:focus { outline:none; }
+@media(prefers-reduced-motion:reduce) {
+ .invitation-opening { transition-duration:.01ms; }
+ .opening-card { transition-delay:0s!important; }
+ .opening-pocket,.opening-flap { transition-duration:.01ms!important;transition-delay:0s!important; }
+}
+
+/* Invitation typography: generous serif names, restrained supporting copy. */
+.opening-card {
+ justify-content:center;
+ padding:18svh 15vw 22svh;
+ text-rendering:optimizeLegibility;
+ -webkit-font-smoothing:antialiased;
+}
+.opening-blessing { gap:15px; }
+.opening-blessing > span { font-size:clamp(14px,1.2vw,19px);color:#83562e; }
+.opening-blessing > p { font:500 12px/1.6 Gotham,sans-serif;letter-spacing:.2em;color:#73573f; }
+.opening-emblem { grid-template-columns:44px 6px 44px;opacity:.65; }
+.opening-emblem em { width:6px;background:none;box-shadow:none; }
+.opening-names {
+ display:flex;align-items:center;justify-content:center;gap:clamp(20px,3vw,48px);
+ width:100%;margin:clamp(22px,3.5svh,40px) auto 0;max-width:none!important;
+}
+.opening-names > span {
+ font:400 clamp(54px,6.7vw,106px)/1.06 IvyOra,Georgia,serif;
+ letter-spacing:-.035em;color:#672b28;text-shadow:none;
+}
+.opening-names > i {
+ display:block;width:auto;aspect-ratio:auto;margin:0;border:0;border-radius:0;
+ background:none;box-shadow:none;color:#a07943;
+ font:italic 400 clamp(28px,3.6vw,50px)/1.15 IvyOra,Georgia,serif;
+}
+.opening-details { margin-top:clamp(22px,3svh,36px); }
+.opening-details small { font:400 clamp(16px,1.35vw,20px)/1.65 IvyOra,Georgia,serif;letter-spacing:.015em;color:#73543f; }
+.opening-date { gap:24px;margin-top:clamp(22px,3svh,34px); }
+.opening-date b { min-width:0;padding:0 22px;border-inline:1px solid #af8c5866;font:400 clamp(32px,3vw,45px)/1 IvyOra,Georgia,serif;letter-spacing:0;color:#672b28; }
+.opening-date span { padding:0;border:0;font:500 12px/1.4 Gotham,sans-serif;letter-spacing:.18em;color:#785531; }
+.opening-details > p { margin-top:18px;font:500 12px/1.6 Gotham,sans-serif;letter-spacing:.15em;color:#785d43; }
+
+/* Copy appears after the envelope clears, in a quiet, staggered sequence. */
+.opening-blessing,.opening-names,.opening-details {
+ opacity:0;translate:0 16px;
+ transition:opacity .9s ease,translate 1.2s cubic-bezier(.16,1,.3,1);
+}
+.invitation-opening:is([data-phase="opening"],[data-phase="revealed"],[data-phase="exiting"]) .opening-blessing { opacity:1;translate:0;transition-delay:.75s; }
+.invitation-opening:is([data-phase="opening"],[data-phase="revealed"],[data-phase="exiting"]) .opening-names { opacity:1;translate:0;transition-delay:.95s; }
+.invitation-opening:is([data-phase="opening"],[data-phase="revealed"],[data-phase="exiting"]) .opening-details { opacity:1;translate:0;transition-delay:1.15s; }
+.invitation-opening { transition-duration:1.15s; }
+.opening-envelope { transition:opacity 1.15s ease,transform 1.2s cubic-bezier(.22,1,.36,1)!important; }
+.invitation-opening[data-phase="exiting"] .opening-envelope { transform:scale(1.025)!important; }
+@media(max-width:700px) {
+ .opening-card { padding:17svh 12vw 25svh; }
+ .opening-blessing { gap:12px; }
+ .opening-blessing > span { font-size:14px; }
+ .opening-blessing > p { max-width:230px;font-size:10px;letter-spacing:.14em; }
+ .opening-names { flex-direction:column;gap:6px;margin-top:22px; }
+ .opening-names > span { font-size:clamp(44px,13vw,66px);line-height:1.03;letter-spacing:-.03em; }
+ .opening-names > i { width:auto;margin:0;font-size:27px;box-shadow:none; }
+ .opening-details { margin-top:20px; }
+ .opening-details small { font-size:15px;line-height:1.6;letter-spacing:0; }
+ .opening-date { gap:14px;margin-top:22px; }
+ .opening-date b { min-width:0;padding:0 14px;font-size:32px; }
+ .opening-date span { padding:0;font-size:10px;letter-spacing:.12em; }
+ .opening-details > p { margin-top:14px;font-size:10px;letter-spacing:.12em; }
+}
+@media(max-height:650px) {
+ .opening-card { padding-block:10svh 16svh; }
+ .opening-blessing { gap:6px; }
+ .opening-names { margin-top:14px;gap:4px; }
+ .opening-names > span { font-size:clamp(38px,7vw,62px); }
+ .opening-details { margin-top:12px; }
+ .opening-date { margin-top:12px; }
+ .opening-details > p { margin-top:8px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .invitation-opening { transition-duration:.01ms; }
+ .opening-blessing,.opening-names,.opening-details { transition:none;translate:none; }
 }
 
 /* Sacred havan fire, perfectly aligned inside the brass havan kund */
@@ -1170,4 +1297,3 @@ html[data-invitation-hold="true"] .opening-card::after { content:"A moment to ta
  .opening-flap,.opening-card,.opening-envelope { transition-duration:.01ms!important; }
  .family-havan { animation:none!important;background-position:0% 0%!important; }
 }
-

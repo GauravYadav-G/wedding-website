@@ -1,6 +1,5 @@
 import { FlowerShower } from "@/components/site/LivingDecor";
 import CoupleFilm from "@/components/site/CoupleFilm";
-import Hero from "@/components/site/Hero";
 import TempleScene from "@/components/site/TempleScene";
 import Events from "@/components/site/Events";
 import GalleryStack from "@/components/site/GalleryStack";
@@ -36,7 +35,7 @@ export default function HomePage() {
         addressCountry: "IN",
       },
     },
-    image: ["/video/ceremony-scroll-desktop-poster.webp", "/images/ayusha-deepak-3.jpg"],
+    image: ["/images/ayusha-deepak-3.jpg"],
     description:
       "Deepak weds Ayusha — wedding celebrations in Greater Noida West on 8th and 9th December 2026.",
     organizer: {
@@ -56,9 +55,6 @@ export default function HomePage() {
       <FlowerShower />
       <main>
         <OpeningEnvelope />
-        <ChapterBlend tone="warm" />
-        <Hero />
-        <ChapterBlend tone="light" />
         <TempleScene />
         <ChapterBlend tone="light" />
         <FamilyBlessing />

@@ -40,7 +40,7 @@ export default function TempleScene() {
   }, []);
 
   return (
-    <section id="invitation" className="hero" ref={ref} aria-label="Wedding invitation and Ram Mandir blessing">
+    <section id="invitation" className="hero" ref={ref} tabIndex={-1} aria-label="Wedding invitation and Ram Mandir blessing">
       <div className="hero__stage">
         <Scenery className="hero__sky" desktop="d81463ceaca156e6.webp" mobile="3a1202a6edfbd91f.webp" />
         <Scenery className="hero__mountains" desktop="c25249f713a6ca00.webp" mobile="c245028d56191860.webp" />
