@@ -4,7 +4,6 @@ import TempleScene from "@/components/site/TempleScene";
 import Events from "@/components/site/Events";
 import GalleryStack from "@/components/site/GalleryStack";
 import Venue from "@/components/site/Venue";
-import Rsvp from "@/components/site/Rsvp";
 import CountdownScene from "@/components/site/CountdownScene";
 import Footer from "@/components/site/Footer";
 import { wedding } from "@/lib/wedding";
@@ -66,8 +65,6 @@ export default function HomePage() {
         <GalleryStack />
         <ChapterBlend tone="light" />
         <Venue />
-        <ChapterBlend tone="warm" />
-        <Rsvp />
         <ChapterBlend tone="warm" />
         <Wishes />
         <ChapterBlend tone="dark" />

@@ -9,8 +9,7 @@ const LINKS = [
   { href: "#events", label: "Events" },
   { href: "#gallery", label: "Gallery" },
   { href: "#venue", label: "Venue" },
-  { href: "#rsvp", label: "RSVP" },
-  { href: "#wishes", label: "Wishes" },
+  { href: "#wishes", label: "Blessings" },
 ];
 
 export default function Nav() {
@@ -69,10 +68,10 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="#rsvp"
+              href="#wishes"
               className="rounded-full bg-maroon px-6 py-2.5 font-body text-[13px] font-medium uppercase tracking-[0.18em] text-cream transition-all duration-300 hover:bg-saffron-2 hover:shadow-[0_10px_24px_rgba(169,74,16,0.35)]"
             >
-              Reserve
+              Blessings
             </a>
           </nav>
 
