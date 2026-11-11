@@ -7,6 +7,7 @@ import Venue from "@/components/site/Venue";
 import CountdownScene from "@/components/site/CountdownScene";
 import Footer from "@/components/site/Footer";
 import { wedding } from "@/lib/wedding";
+import { getSiteUrl, OG_IMAGE_PATH } from "@/lib/site-url";
 import MusicToggle from "@/components/site/MusicToggle";
 import StoryMotion from "@/components/site/StoryMotion";
 import OpeningEnvelope from "@/components/site/OpeningEnvelope";
@@ -34,7 +35,7 @@ export default function HomePage() {
         addressCountry: "IN",
       },
     },
-    image: ["/images/ayusha-deepak-3.jpg"],
+    image: [new URL(OG_IMAGE_PATH, getSiteUrl()).toString()],
     description:
       "Deepak weds Ayusha — wedding celebrations in Greater Noida West on 8th and 9th December 2026.",
     organizer: {
