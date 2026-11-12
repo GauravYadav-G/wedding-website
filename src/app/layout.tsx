@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import { getSiteUrl, OG_IMAGE_PATH, SHARE_DESCRIPTION } from "@/lib/site-url";
 import "./globals.css";
 
-const shareTitle = "Ayusha weds Deepak | Shubh Vivah — 8–9 December 2026";
+const shareTitle = "Deepak weds Ayusha | Shubh Vivah — 8–9 December 2026";
 const ogImageAlt =
-  "Ayusha weds Deepak — Shubh Vivah wedding invitation on 8–9 December 2026 in Greater Noida West";
+  "Deepak weds Ayusha — Shubh Vivah wedding invitation on 8–9 December 2026 in Greater Noida West";
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
