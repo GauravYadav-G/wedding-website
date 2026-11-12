@@ -19,3 +19,6 @@ export function getSiteUrl(): URL {
 
 export const OG_IMAGE_PATH = "/images/og-invite.jpg";
 
+export const SHARE_DESCRIPTION =
+  "Join us for Haldi, Mehndi & Sangeet (8 Dec) at C-66, GR Garden Phase 2, Greater Noida West, and Shubh Vivah (9 Dec) at Amaatra Banquet, Greater Noida West.";
+

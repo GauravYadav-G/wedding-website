@@ -1,19 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { getSiteUrl, OG_IMAGE_PATH } from "@/lib/site-url";
+import { getSiteUrl, OG_IMAGE_PATH, SHARE_DESCRIPTION } from "@/lib/site-url";
 import "./globals.css";
 
 const shareTitle = "Ayusha weds Deepak | Shubh Vivah — 8–9 December 2026";
-const shareDescription =
-  "With the blessings of Lord Ganesha & our families, join us on 8–9 December 2026 in Greater Noida West. View the schedule, venues & send your blessings.";
 const ogImageAlt =
   "Ayusha weds Deepak — Shubh Vivah wedding invitation on 8–9 December 2026 in Greater Noida West";
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: "Deepak & Ayusha | Shubh Vivah — 9 December 2026, Greater Noida West",
-  description:
-    "Deepak weds Ayusha — a divine celebration in Greater Noida West. Celebrations on 8th and 9th December 2026. Browse the schedule, venues and share your blessings.",
+  description: SHARE_DESCRIPTION,
   keywords: [
     "wedding invitation",
     "Deepak weds Ayusha",
@@ -27,7 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: shareTitle,
-    description: shareDescription,
+    description: SHARE_DESCRIPTION,
     url: "/",
     siteName: "Shubh Vivah · Wedding Invitation",
     locale: "en_IN",
@@ -45,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: shareTitle,
-    description: shareDescription,
+    description: SHARE_DESCRIPTION,
     images: [
       {
         url: OG_IMAGE_PATH,
