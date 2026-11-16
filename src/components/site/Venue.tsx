@@ -12,8 +12,8 @@ export default function Venue() {
   return <section id="venue" className="story-venues" aria-labelledby="venue-title">
     <div className="venue-intro">
       <div className="venue-palace" aria-hidden="true"><picture><source media="(max-width:700px)" srcSet="/artwork/mandap-immersive-mobile.webp" /><img src="/artwork/mandap-immersive-desktop.webp" alt="" loading="lazy" decoding="async" /></picture><span className="palace-glow" /><LivingLamps /></div>
-      <header className="premium-heading venue-heading" data-story=""><span className="eyebrow">The next chapter · 9 December 2026</span><p className="script-accent">A setting for our forever</p><h2 id="venue-title">A place for every memory.</h2></header>
-      <span className="venue-discover" aria-hidden="true">Explore the venues ↓</span>
+      <header className="premium-heading venue-heading" data-story=""><span className="eyebrow">The next chapter · 9 December 2026</span><p className="script-accent">A setting for our forever</p><h2 id="venue-title">A place for every<br />memory.</h2></header>
+      <div className="venue-discover" aria-hidden="true"><img src="/artwork/flying-marigold.webp" alt="" className="venue-marigold-icon" width={18} height={18} /><span>Explore the venues ↓</span></div>
     </div>
     <div className="story-venue-grid">{[...wedding.venues].reverse().map(venue => <article className="story-venue-card" key={venue.id} data-story="">
       <span className="eyebrow">{venue.id === "amaatra" ? "09 December · The wedding" : "08 December · Haldi, Mehndi & Sangeet"}</span><MapPin size={25} strokeWidth={1.2} className="venue-pin" aria-hidden="true" /><h3>{venue.name}</h3><p>{venue.address}</p>

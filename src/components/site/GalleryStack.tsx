@@ -36,7 +36,7 @@ export default function GalleryStack() {
   const open = () => { setAutoPlay(false); dialog.current?.showModal(); };
   return <section id="gallery" ref={root} className="memory-story" aria-labelledby="gallery-title">
     <div className="memory-canopy" aria-hidden="true"><img src="/artwork/b4f038c348f07bc0.webp" alt="" loading="lazy" /></div>
-    <header className="premium-heading" data-story=""><span className="eyebrow">A note from Deepak</span><p className="script-accent">A new chapter, with Ayusha</p><h2 id="gallery-title">Some moments<br />deserve to last forever.</h2><p>As Ayusha and I begin this new chapter, I look forward to celebrating it with the people who mean the most to us. These little moments are only the beginning.</p></header>
+    <header className="premium-heading" data-story=""><span className="eyebrow">A note from Deepak &amp; Ayusha</span><p className="script-accent">A new chapter, together</p><h2 id="gallery-title">Some moments<br />deserve to last forever.</h2><p>As we begin this new chapter together, we look forward to celebrating with the people who mean the most to us. These little moments are only the beginning.</p></header>
     <div className="memory-stage" aria-roledescription="carousel" aria-label="Deepak and Ayusha’s photographs" onTouchStart={event => { touchX.current = event.touches[0].clientX; }} onTouchEnd={event => { if(touchX.current !== null) { const delta=event.changedTouches[0].clientX-touchX.current; if(Math.abs(delta)>45) move(delta<0?1:-1); touchX.current=null; } }}>
       <Mandala className="memory-halo" aria-hidden="true" />
       {photos.map((photo, index) => { const offset=(index-active+photos.length)%photos.length; const position=offset===3?-1:offset;
