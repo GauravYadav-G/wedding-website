@@ -943,11 +943,11 @@ html[data-envelope-active="true"] .flower-shower { opacity:0; }
 .venue-intro .venue-palace picture img { position:absolute;inset:0;object-fit:cover;object-position:center 48%; }
 .venue-intro .venue-palace::after { z-index:2;height:68%;background:linear-gradient(transparent 0%,rgba(38,18,12,0.28) 20%,rgba(38,18,12,0.68) 55%,rgba(25,9,6,0.92) 100%); }
 .venue-intro .venue-heading { position:absolute;z-index:5;left:50%;bottom:8.5svh;width:min(92%,900px);translate:-50%;margin:0;text-align:center;color:#fff5e7; }
-.venue-intro .venue-heading .eyebrow { display:inline-block;font-weight:700;letter-spacing:.22em;color:#fff5db;text-shadow:0 1px 3px rgba(18,5,2,0.95),0 0 8px rgba(18,5,2,0.9);padding:4px 12px;background:rgba(35,14,9,0.55);border:1px solid rgba(255,230,180,0.28);border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px); }
+.venue-intro .venue-heading .eyebrow { display:block;font-weight:700;letter-spacing:.22em;color:#fff5db;text-shadow:0 1px 3px rgba(18,5,2,0.95),0 0 8px rgba(18,5,2,0.9),0 2px 14px rgba(18,5,2,0.85);margin-bottom:6px; }
 .venue-intro .venue-heading .script-accent { color:#ffe6bd;text-shadow:0 1px 3px rgba(18,5,2,0.95),0 0 12px rgba(18,5,2,0.9),0 2px 20px rgba(18,5,2,0.85); }
 .venue-intro .venue-heading h2 { color:#ffffff;text-shadow:0 2px 4px rgba(18,5,2,0.9),0 4px 18px rgba(18,5,2,0.85); }
 .venue-intro .living-lamps { display:none; }
-.venue-discover { position:absolute;z-index:6;right:3%;bottom:4%;font:600 8px/1.5 Gotham,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#fff2d1;padding:5px 14px;background:rgba(35,14,9,0.55);border:1px solid rgba(255,230,180,0.25);border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:0 1px 3px rgba(18,5,2,0.9); }
+.venue-discover { position:absolute;z-index:6;right:3%;bottom:4%;font:600 8.5px/1.5 Gotham,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff2d1;text-shadow:0 1px 3px rgba(18,5,2,0.95),0 0 8px rgba(18,5,2,0.9); }
 .story-venue-grid { padding:clamp(65px,7vw,110px) 24px 0; }
 .venue-help { padding-inline:24px;padding-bottom:70px; }
 
