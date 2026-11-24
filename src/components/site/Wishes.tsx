@@ -21,18 +21,52 @@ export default function Wishes() {
     setSubmitting(true);
     setError(null);
     try {
-      const res = await fetch("/api/wishes", {
+      // 1. Submit to backend API (/api/wishes) to store in database
+      const dbPromise = fetch("/api/wishes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, message }),
-      });
-      const data = (await res.json()) as {
-        ok: boolean;
-        error?: string;
-      };
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error ?? "Could not send your blessing right now");
+      })
+        .then(async (r) => {
+          const data = await r.json().catch(() => null);
+          return { ok: r.ok && data?.ok, error: data?.error };
+        })
+        .catch(() => null);
+
+      // 2. Direct client-side FormSubmit to deepuku.0212@gmail.com
+      const formSubmitPromise = fetch(
+        "https://formsubmit.co/ajax/deepuku.0212@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            Name: name,
+            Blessing: message,
+            Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
+            _subject: `🌸 New Wedding Blessing from ${name} for Deepak & Ayusha`,
+            _template: "table",
+            _captcha: "false",
+          }),
+        }
+      )
+        .then(async (r) => {
+          const data = await r.json().catch(() => null);
+          return { ok: r.ok || data?.success === "true" || data?.success === true };
+        })
+        .catch(() => null);
+
+      const [dbResult, formResult] = await Promise.all([
+        dbPromise,
+        formSubmitPromise,
+      ]);
+
+      if (!dbResult?.ok && !formResult?.ok) {
+        throw new Error(dbResult?.error ?? "Could not send your blessing right now. Please try again.");
       }
+
       setSent(true);
       setName("");
       setMessage("");
@@ -99,7 +133,21 @@ export default function Wishes() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={submit} className="flex flex-col gap-5">
+              <form
+                action="https://formsubmit.co/deepuku.0212@gmail.com"
+                method="POST"
+                onSubmit={submit}
+                className="flex flex-col gap-5"
+              >
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input
+                  type="hidden"
+                  name="_subject"
+                  value={`🌸 New Wedding Blessing from ${name || "a guest"} for Deepak & Ayusha`}
+                />
+                <input type="hidden" name="Occasion" value="Deepak & Ayusha Wedding (09 Dec 2026)" />
+
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="blessing-name"
@@ -109,6 +157,7 @@ export default function Wishes() {
                   </label>
                   <input
                     id="blessing-name"
+                    name="name"
                     type="text"
                     required
                     minLength={2}
@@ -134,6 +183,7 @@ export default function Wishes() {
                   </div>
                   <textarea
                     id="blessing-message"
+                    name="message"
                     required
                     rows={4}
                     minLength={2}

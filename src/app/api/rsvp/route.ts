@@ -92,6 +92,7 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
+        signal: AbortSignal.timeout(5000),
         body: JSON.stringify({
           Guest_Name: name,
           Phone_Number: mobile,
