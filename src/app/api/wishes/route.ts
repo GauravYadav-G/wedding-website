@@ -36,41 +36,31 @@ export async function POST(request: Request) {
       .values({ name, message })
       .returning();
 
-    // 2. Send email using FormSubmit API (https://formsubmit.co)
+    // 2. Optional non-blocking server-side notification attempt
     const recipient =
       process.env.BLESSINGS_EMAIL ||
       process.env.WEDDING_EMAIL ||
       "deepuku.0212@gmail.com";
 
-    try {
-      const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipient}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        signal: AbortSignal.timeout(5000),
-        body: JSON.stringify({
-          Name: name,
-          Blessing: message,
-          Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
-          _subject: `🌸 New Wedding Blessing from ${name} for Deepak & Ayusha`,
-          _template: "table",
-          _captcha: "false",
-        }),
-      });
-
-      if (!formSubmitRes.ok) {
-        const errorText = await formSubmitRes.text();
-        console.warn(
-          "[FormSubmit] API responded with:",
-          formSubmitRes.status,
-          errorText
-        );
-      }
-    } catch (apiErr) {
-      console.error("[FormSubmit] Error calling FormSubmit API:", apiErr);
-    }
+    // Non-blocking fire-and-forget so the client response is immediate (~30ms)
+    void fetch(`https://formsubmit.co/ajax/${recipient}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      signal: AbortSignal.timeout(3000),
+      body: JSON.stringify({
+        Name: name,
+        Blessing: message,
+        Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
+        _subject: `🌸 New Wedding Blessing from ${name} for Deepak & Ayusha`,
+        _template: "table",
+        _captcha: "false",
+      }),
+    }).catch(() => {
+      // Ignored: client-side form directly delivers via FormSubmit
+    });
 
     return NextResponse.json(
       {

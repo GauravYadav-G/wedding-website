@@ -16,67 +16,32 @@ export default function Wishes() {
   const [error, setError] = useState<string | null>(null);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (submitting) return;
+    if (submitting) {
+      event.preventDefault();
+      return;
+    }
     setSubmitting(true);
     setError(null);
+
+    // 1. Save to local PostgreSQL database via /api/wishes
     try {
-      // 1. Submit to backend API (/api/wishes) to store in database
-      const dbPromise = fetch("/api/wishes", {
+      await fetch("/api/wishes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, message }),
-      })
-        .then(async (r) => {
-          const data = await r.json().catch(() => null);
-          return { ok: r.ok && data?.ok, error: data?.error };
-        })
-        .catch(() => null);
+      });
+    } catch (err) {
+      console.warn("DB save error:", err);
+    }
 
-      // 2. Direct client-side FormSubmit to deepuku.0212@gmail.com
-      const formSubmitPromise = fetch(
-        "https://formsubmit.co/ajax/deepuku.0212@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            Name: name,
-            Blessing: message,
-            Occasion: "Deepak & Ayusha Wedding (09 Dec 2026)",
-            _subject: `🌸 New Wedding Blessing from ${name} for Deepak & Ayusha`,
-            _template: "table",
-            _captcha: "false",
-          }),
-        }
-      )
-        .then(async (r) => {
-          const data = await r.json().catch(() => null);
-          return { ok: r.ok || data?.success === "true" || data?.success === true };
-        })
-        .catch(() => null);
-
-      const [dbResult, formResult] = await Promise.all([
-        dbPromise,
-        formSubmitPromise,
-      ]);
-
-      if (!dbResult?.ok && !formResult?.ok) {
-        throw new Error(dbResult?.error ?? "Could not send your blessing right now. Please try again.");
-      }
-
+    // 2. Allow native browser FormSubmit to target="formsubmit_frame"
+    // and show success UI
+    setTimeout(() => {
       setSent(true);
       setName("");
       setMessage("");
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Something went wrong. Please try again."
-      );
-    } finally {
       setSubmitting(false);
-    }
+    }, 600);
   };
 
   return (
@@ -133,12 +98,21 @@ export default function Wishes() {
                 </button>
               </div>
             ) : (
-              <form
-                action="https://formsubmit.co/deepuku.0212@gmail.com"
-                method="POST"
-                onSubmit={submit}
-                className="flex flex-col gap-5"
-              >
+              <>
+                <iframe
+                  name="formsubmit_frame"
+                  id="formsubmit_frame"
+                  title="FormSubmit Delivery Frame"
+                  className="hidden"
+                  style={{ display: "none" }}
+                />
+                <form
+                  action="https://formsubmit.co/deepuku.0212@gmail.com"
+                  method="POST"
+                  target="formsubmit_frame"
+                  onSubmit={submit}
+                  className="flex flex-col gap-5"
+                >
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
                 <input
@@ -227,6 +201,7 @@ export default function Wishes() {
                   Delivered straight to Deepak &amp; Ayusha
                 </p>
               </form>
+            </>
             )}
           </div>
         </Reveal>
